@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 
 namespace Character
 {
-    public class CharacterData : MonoBehaviour
+    public class CharacterController : MonoBehaviour
     {
         public bool IsReadyToLeave { get; private set; }
         
@@ -15,7 +15,7 @@ namespace Character
         [SerializeField] private float _rotationSpeed;
 
         [SerializeField] private CharacterAnimator _animator;
-
+        
         private CharacterState _currentState;
 
         private Transform[] _pointsToMarket;

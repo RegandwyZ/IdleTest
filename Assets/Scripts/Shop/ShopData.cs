@@ -2,6 +2,7 @@
 using Character;
 using Queue;
 using UnityEngine;
+using CharacterController = Character.CharacterController;
 
 namespace Shop
 {
@@ -23,7 +24,7 @@ namespace Shop
             return _shopPoint;
         }
         
-        public QueuePoint GetQueuePoint(CharacterData occupant)
+        public QueuePoint GetQueuePoint(CharacterController occupant)
         {
             foreach (var point in _queuePoints)
             {
@@ -58,8 +59,7 @@ namespace Shop
                     _queuePoints[i].AssignOccupant(nextOccupant);
 
                     nextOccupant.SetQueuePoint(_queuePoints[i]);
-
-
+                    
                     _queuePoints[i + 1].ClearOccupant();
                 }
             }

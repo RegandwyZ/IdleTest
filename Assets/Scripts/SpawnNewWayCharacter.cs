@@ -2,12 +2,12 @@ using System.Collections;
 using UnityEngine;
 using Character;
 using Shop;
-
+using CharacterController = Character.CharacterController;
 
 
 public class SpawnNewWayCharacter : MonoBehaviour
 {
-    [SerializeField] private CharacterData[] _newCharacterData;
+    [SerializeField] private CharacterController[] _newCharacterData;
     [SerializeField] private Transform[] _spawnPoints;
     [SerializeField] private Path _pathToMarket;
     [SerializeField] private Path _pathToTrain;

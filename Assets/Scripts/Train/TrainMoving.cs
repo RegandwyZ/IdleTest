@@ -1,6 +1,7 @@
 using System.Collections;
 using Character;
 using UnityEngine;
+using CharacterController = Character.CharacterController;
 
 namespace Train
 {
@@ -45,7 +46,7 @@ namespace Train
 
         private void DeSpawnCharacters()
         {
-            CharacterData[] characters = FindObjectsByType<CharacterData>(sortMode: FindObjectsSortMode.None);
+            CharacterController[] characters = FindObjectsByType<CharacterController>(sortMode: FindObjectsSortMode.None);
             foreach (var character in characters)
             {
                 if (character.IsReadyToLeave) 
