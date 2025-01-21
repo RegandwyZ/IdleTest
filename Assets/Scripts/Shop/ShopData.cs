@@ -1,5 +1,4 @@
 ﻿using System;
-using Character;
 using Queue;
 using UnityEngine;
 using CharacterController = Character.CharacterController;

@@ -1,6 +1,7 @@
 using System.Collections;
 using Character;
 using UnityEngine;
+using UnityEngine.Serialization;
 using CharacterController = Character.CharacterController;
 
 namespace Train
@@ -9,7 +10,7 @@ namespace Train
     {
         [SerializeField] private Transform _pointA; 
         [SerializeField] private Transform _pointB; 
-        [SerializeField] private SpawnNewWayCharacter _spawnNewWayCharacter;
+        [FormerlySerializedAs("_spawnSystem")] [FormerlySerializedAs("_spawnNewWayCharacter")] [SerializeField] private Bootstrap _bootstrap;
         
         private readonly float _speed = 25f; 
 
@@ -23,7 +24,7 @@ namespace Train
             while (true)
             {
                 yield return StartCoroutine(MoveToPoint(_pointB.position));
-                _spawnNewWayCharacter.SpawnNewWay();
+                _bootstrap.SpawnNewWay();
                 yield return new WaitForSeconds(7f);
                 
                 DeSpawnCharacters();
