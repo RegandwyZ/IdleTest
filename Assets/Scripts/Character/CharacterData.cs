@@ -1,40 +1,60 @@
+using System;
 using Queue;
 using Shop;
 using UnityEngine;
+using Random = UnityEngine.Random;
+
 
 namespace Character
 {
     public class CharacterData : MonoBehaviour
     {
-        [SerializeField] private float _moveSpeed = 0.4f;
-        [SerializeField] private float _rotationSpeed = 5f;
+        public bool IsReadyToLeave { get; private set; }
         
+        [SerializeField] private float _moveSpeed;
+        [SerializeField] private float _rotationSpeed;
+
         [SerializeField] private CharacterAnimator _animator;
 
         private CharacterState _currentState;
 
-        private Transform[] _points;
+        private Transform[] _pointsToMarket;
+        private Transform[] _pointsToTrain;
         private ShopData[] _shops;
         private ShopData _currentShop;
-        
+
         private QueuePoint _queuePoint;
 
-        private int _currentPointIndex;
+        private int _currentPointToMarketIndex;
+        private int _currentPointToTrainIndex;
         private int _currentShopIndex;
-
-        public void SetData(ShopData[] shopData)
+        private bool _isVisitedAllShops;
+        private Vector3 _centerPoint;
+        private Vector3 _targetTrainNearPoint;
+        private Vector3 _previousPosition;
+        
+       
+        public void SetData(ShopData[] shopData, Vector3 centerPoint)
         {
-            _animator.SetMoveAnimation();
             _shops = shopData;
-
-            _currentShopIndex = 0; 
+            float randomX = Random.Range(-6f, 6f);
+            float randomZ = Random.Range(-6f, 6f);
+            
+            _centerPoint = centerPoint + new Vector3(randomX, 0, randomZ);
+            _currentShopIndex = 0;
             _currentState = CharacterState.MoveToMarketPlace;
         }
 
         public void SetPathToMarketPlace(Path path)
         {
-            _points = path.GetWayPoints();
-            _currentPointIndex = 0;
+            _pointsToMarket = path.GetWayPoints();
+            _currentPointToMarketIndex = 0;
+        }
+
+        public void SetPathToTrainPlace(Path path)
+        {
+            _pointsToTrain = path.GetWayPoints();
+            _currentPointToTrainIndex = 0;
         }
 
         private void Update()
@@ -42,6 +62,7 @@ namespace Character
             switch (_currentState)
             {
                 case CharacterState.Idle:
+                    _animator.SetIdleAnimation();
                     break;
 
                 case CharacterState.MoveToMarketPlace:
@@ -54,33 +75,77 @@ namespace Character
 
                 case CharacterState.ToQueue:
                     MoveToShopQueue();
-                   // _currentState = CharacterState.Idle;
                     break;
 
                 case CharacterState.Trading:
-                    _currentShop.StartTrade(() =>
-                    {
-                        SetNextShop();
-                        MoveToNextShop();
-                    });
+                    _animator.SetIdleAnimation();
+                    _currentShop.StartTrade(OnTradeComplete);
+                    break;
+                
+                case CharacterState.MoveToCenterPoint:
+                    MoveToCenterPoint();
                     break;
 
                 case CharacterState.MoveToTrain:
                     MoveToTrain();
                     break;
+                
+                case CharacterState.MoveToTrainPlacePoint:
+                    MoveToPlaceNearTrain();
+                    break;
+                    
             }
         }
 
         private void MoveToTrain()
         {
-           
+            if (_currentPointToTrainIndex >= _pointsToTrain.Length)
+            {
+                return;
+            }
+            
+            Vector3 baseTrainPoint = _pointsToTrain[^1].position;
+                
+            float randomX = Random.Range(-2f, 10f);
+            float randomZ = Random.Range(-1f, 1f);
+
+            _targetTrainNearPoint = baseTrainPoint + new Vector3(randomX, 0, randomZ);
+            MoveTo(
+                _pointsToTrain[_currentPointToTrainIndex].position,
+                0.01f,
+                _currentPointToTrainIndex + 1 >= _pointsToTrain.Length ? CharacterState.MoveToTrainPlacePoint : _currentState,
+                () =>
+                {
+                    _currentPointToTrainIndex++;
+                    if (_currentPointToTrainIndex >= _pointsToTrain.Length)
+                    {
+                        _currentState = CharacterState.MoveToTrainPlacePoint;
+                    }
+                }
+            );
         }
 
-        private void MoveToShop(ShopData shopData)
+        private void MoveToPlaceNearTrain()
         {
-            if (_currentState != CharacterState.ToShop) return;
+            MoveTo(
+                _targetTrainNearPoint,
+                0.5f,
+                CharacterState.Idle,
+                () =>
+                {
+                    _currentState = CharacterState.Idle;
+                    _animator.SetIdleAnimation();
+                    IsReadyToLeave = true;
+                }
+            );
+        }
 
-            Vector3 direction = shopData.GetShopPoint().transform.position - transform.position;
+        private void MoveTo(Vector3 targetPosition, float stopDistance, CharacterState nextState,
+            Action onReachTarget = null)
+        {
+            _animator.SetMoveAnimation();
+            
+            Vector3 direction = targetPosition - transform.position;
 
             if (direction.sqrMagnitude > 0.0001f)
             {
@@ -94,54 +159,108 @@ namespace Character
 
             transform.position = Vector3.MoveTowards(
                 transform.position,
-                shopData.GetShopPoint().transform.position,
+                targetPosition,
                 _moveSpeed * Time.deltaTime
             );
 
-            float distanceToPoint = direction.magnitude;
-            if (distanceToPoint < 0.01f)
+            if (direction.magnitude < stopDistance)
             {
                 _animator.SetIdleAnimation();
-                _queuePoint = shopData.GetQueuePoint();
+                _currentState = nextState;
                 
-                _currentState = CharacterState.ToQueue;
+                onReachTarget?.Invoke();
             }
+        }
+        
+        private void MoveToShop(ShopData shopData)
+        {
+            MoveTo(
+                shopData.GetShopPoint().position,
+                0.01f,
+                CharacterState.Idle,
+                () =>
+                {
+                    _queuePoint = shopData.GetQueuePoint(this);
+
+                    if (_queuePoint == null)
+                    {
+                        SetNextShop();
+                        
+                        _currentState = CharacterState.MoveToCenterPoint;
+                    }
+                    else
+                    {
+                        _currentState = CharacterState.ToQueue;
+                    }
+                }
+            );
+        }
+        
+        private void MoveToShopQueue()
+        {
+            MoveTo(
+                _queuePoint.transform.position,
+                0.01f,
+                _queuePoint.IsTradePoint ? CharacterState.Trading : CharacterState.Idle,
+                () =>
+                {
+                    if (!_queuePoint.IsTradePoint)
+                    {
+                        _animator.SetIdleAnimation();
+                    }
+                }
+            );
+        }
+        
+        private void OnTradeComplete()
+        {
+            _currentShop.ReleaseQueuePoint(_queuePoint);
+            _queuePoint = null;
+            
+            SetNextShop();
+            _currentState = CharacterState.MoveToCenterPoint;
+        }
+
+        private void MoveToCenterPoint()
+        {
+            var state = _isVisitedAllShops ? CharacterState.MoveToTrain : CharacterState.ToShop;
+            
+            MoveTo(
+                _centerPoint,
+                0.01f,
+                state
+            );
         }
 
         private void MoveToMarketPlace()
         {
-            if (_currentState != CharacterState.MoveToMarketPlace) return;
-            Vector3 direction = _points[_currentPointIndex].position - transform.position;
-
-            if (direction.sqrMagnitude > 0.0001f)
-            {
-                Quaternion lookRotation = Quaternion.LookRotation(direction);
-                transform.rotation = Quaternion.Slerp(
-                    transform.rotation,
-                    lookRotation,
-                    _rotationSpeed * Time.deltaTime
-                );
-            }
-
-            transform.position = Vector3.MoveTowards(
-                transform.position,
-                _points[_currentPointIndex].position,
-                _moveSpeed * Time.deltaTime
-            );
-
-            float distanceToPoint = direction.magnitude;
-            if (distanceToPoint < 0.01f)
-            {
-                _currentPointIndex++;
-
-                if (_currentPointIndex >= _points.Length)
+            MoveTo(
+                _pointsToMarket[_currentPointToMarketIndex].position,
+                0.01f,
+                _currentPointToMarketIndex + 1 >= _pointsToMarket.Length
+                    ? CharacterState.Idle
+                    : _currentState,
+                () =>
                 {
-                    SetNextShop();
-                    _currentState = CharacterState.ToShop;
-                }
-            }
-        }
+                    _currentPointToMarketIndex++;
 
+                    if (_currentPointToMarketIndex >= _pointsToMarket.Length)
+                    {
+                        if (_currentShopIndex < _shops.Length)
+                        {
+                            SetNextShop();
+                            _currentState = CharacterState.ToShop;
+                        }
+                        else
+                        {
+                            Debug.Log("Все магазины пройдены!");
+                            _currentState = CharacterState.MoveToTrain;
+                        }
+                    }
+                }
+            );
+        }
+        
         private void SetNextShop()
         {
             if (_currentShopIndex < _shops.Length)
@@ -151,53 +270,17 @@ namespace Character
             }
             else
             {
-                Debug.Log("All shops visited!");
-                _currentState = CharacterState.Idle; 
+                Debug.Log("Все магазины пройдены!");
+                _isVisitedAllShops = true;
             }
         }
-
-        private void MoveToNextShop()
+        
+        public void SetQueuePoint(QueuePoint newQueuePoint)
         {
-            if (_currentShopIndex < _shops.Length)
+            _queuePoint = newQueuePoint;
+            if (_currentState == CharacterState.Idle || _currentState == CharacterState.ToQueue)
             {
-                _currentState = CharacterState.ToShop;
-            }
-            else
-            {
-                Debug.Log("All shops visited!");
-                _currentState = CharacterState.Idle;
-            }
-        }
-
-        private void MoveToShopQueue()
-        {
-            Vector3 direction = _queuePoint.transform.position - transform.position;
-
-            if (direction.sqrMagnitude > 0.0001f)
-            {
-                Quaternion lookRotation = Quaternion.LookRotation(direction);
-                transform.rotation = Quaternion.Slerp(
-                    transform.rotation,
-                    lookRotation,
-                    _rotationSpeed * Time.deltaTime
-                );
-            }
-
-            transform.position = Vector3.MoveTowards(
-                transform.position,
-                _queuePoint.transform.position,
-                _moveSpeed * Time.deltaTime
-            );
-
-            float distanceToPoint = direction.magnitude;
-            if (distanceToPoint < 0.01f)
-            {
-                _animator.SetIdleAnimation();
-                if (_queuePoint.IsTradePoint)
-                {
-                    _currentState = CharacterState.Trading;
-                }
-               
+                _currentState = CharacterState.ToQueue;
             }
         }
     }

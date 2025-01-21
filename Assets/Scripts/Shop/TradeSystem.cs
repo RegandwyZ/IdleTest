@@ -6,8 +6,9 @@ namespace Shop
 {
     public class TradeSystem : MonoBehaviour
     {
-        private float _tradeTime = 5f;
+        private float _tradeTime = 1f;
         private bool _isTradeRunning = false;
+        
         public void Trade(Action onTradeComplete)
         {
             if (!_isTradeRunning)
@@ -21,7 +22,7 @@ namespace Shop
         private IEnumerator StartTradeCoroutine(Action onTradeComplete)
         {
             yield return new WaitForSeconds(_tradeTime);
-            Debug.Log("Trade complete");
+            _isTradeRunning = false;
 
             
             onTradeComplete?.Invoke();

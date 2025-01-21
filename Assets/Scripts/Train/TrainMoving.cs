@@ -1,4 +1,5 @@
 using System.Collections;
+using Character;
 using UnityEngine;
 
 namespace Train
@@ -7,9 +8,9 @@ namespace Train
     {
         [SerializeField] private Transform _pointA; 
         [SerializeField] private Transform _pointB; 
-        [SerializeField] SpawnNewWayCharacter _spawnNewWayCharacter;
+        [SerializeField] private SpawnNewWayCharacter _spawnNewWayCharacter;
         
-        private readonly float _speed = 45f; 
+        private readonly float _speed = 25f; 
 
         private void Start()
         {
@@ -22,10 +23,12 @@ namespace Train
             {
                 yield return StartCoroutine(MoveToPoint(_pointB.position));
                 _spawnNewWayCharacter.SpawnNewWay();
-                yield return new WaitForSeconds(0.7f);
-            
+                yield return new WaitForSeconds(7f);
+                
+                DeSpawnCharacters();
+                
                 yield return StartCoroutine(MoveToPoint(_pointA.position));
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(5f);
             }
         }
 
@@ -38,6 +41,18 @@ namespace Train
             }
         
             transform.position = target;
+        }
+
+        private void DeSpawnCharacters()
+        {
+            CharacterData[] characters = FindObjectsByType<CharacterData>(sortMode: FindObjectsSortMode.None);
+            foreach (var character in characters)
+            {
+                if (character.IsReadyToLeave) 
+                {
+                    Destroy(character.gameObject);
+                }
+            }
         }
     }
 }

@@ -4,8 +4,10 @@
     {
         Idle,
         MoveToMarketPlace,
+        MoveToCenterPoint,
         ToShop,
         MoveToTrain,
+        MoveToTrainPlacePoint,
         ToQueue,
         Trading
     }

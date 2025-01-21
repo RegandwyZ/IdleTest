@@ -4,14 +4,17 @@ using Character;
 using Shop;
 
 
+
 public class SpawnNewWayCharacter : MonoBehaviour
 {
-    [SerializeField] private CharacterData _newCharacterData;
+    [SerializeField] private CharacterData[] _newCharacterData;
     [SerializeField] private Transform[] _spawnPoints;
-    [SerializeField] private Path _path;
+    [SerializeField] private Path _pathToMarket;
+    [SerializeField] private Path _pathToTrain;
     [SerializeField] private ShopData[] _shopData;
+    [SerializeField] private Transform _centerPoint;
     
-    private int _count = 1;
+    private int _count = 12;
     
     public void SpawnNewWay()
     {
@@ -22,11 +25,14 @@ public class SpawnNewWayCharacter : MonoBehaviour
     {
         for (int i = 0; i < _count; i++)
         {
-            var citizen = Instantiate(_newCharacterData, _spawnPoints[i].position, _spawnPoints[i].rotation);
+            var randomIndex = Random.Range(0, _newCharacterData.Length);
+            var citizen = Instantiate(_newCharacterData[randomIndex], _spawnPoints[i].position, _spawnPoints[i].rotation);
+            
             ShopData[] shuffledShops = ShuffleShops(_shopData);
             
-            citizen.SetData(shuffledShops);
-            citizen.SetPathToMarketPlace(_path);
+            citizen.SetData(shuffledShops, _centerPoint.position);
+            citizen.SetPathToMarketPlace(_pathToMarket);
+            citizen.SetPathToTrainPlace(_pathToTrain);
 
             yield return new WaitForSeconds(0.1f);
         }

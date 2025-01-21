@@ -1,4 +1,5 @@
 ﻿using System;
+using Character;
 using Queue;
 using UnityEngine;
 
@@ -22,24 +23,46 @@ namespace Shop
             return _shopPoint;
         }
         
-        public QueuePoint GetQueuePoint()
+        public QueuePoint GetQueuePoint(CharacterData occupant)
         {
             foreach (var point in _queuePoints)
             {
                 if (point.CurrentState == QueueState.Empty)
                 {
-                    point.ChangeState(QueueState.Engaged);
+                    point.AssignOccupant(occupant);
                     return point;
                 }
             }
-
-
+            
             return null;
         }
-
+        
         public void StartTrade(Action onTradeComplete)
         {
             _tradeSystem.Trade(onTradeComplete);
+        }
+
+        public void ReleaseQueuePoint(QueuePoint freedPoint)
+        {
+
+            freedPoint.ClearOccupant();
+
+
+            for (int i = 0; i < _queuePoints.Length - 1; i++)
+            {
+                if (_queuePoints[i].CurrentState == QueueState.Empty &&
+                    _queuePoints[i + 1].CurrentState == QueueState.Engaged)
+                {
+                    var nextOccupant = _queuePoints[i + 1].Occupant;
+
+                    _queuePoints[i].AssignOccupant(nextOccupant);
+
+                    nextOccupant.SetQueuePoint(_queuePoints[i]);
+
+
+                    _queuePoints[i + 1].ClearOccupant();
+                }
+            }
         }
     }
 }

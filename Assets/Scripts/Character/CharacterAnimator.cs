@@ -6,6 +6,7 @@ namespace Character
     {
         private static readonly int Idle = Animator.StringToHash("Idle");
         private static readonly int Move = Animator.StringToHash("Move");
+        private static readonly int Run = Animator.StringToHash("Run");
         
         private Animator _animator;
 
@@ -23,5 +24,6 @@ namespace Character
         {
             _animator.SetTrigger(Move);
         }
+        
     }
 }
