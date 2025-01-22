@@ -27,6 +27,7 @@ namespace Shop
         {
             _tradeSystem.IncreaseIncome();
         }
+        
         public Transform GetShopPoint()
         {
             return _shopPoint;

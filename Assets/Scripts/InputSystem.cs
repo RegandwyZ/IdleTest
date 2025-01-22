@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class InputSystem : MonoBehaviour
 {
@@ -11,6 +12,9 @@ public class InputSystem : MonoBehaviour
 
     private void Update()
     {
+        if (IsPointerOverUI())
+            return;
+
         if (Input.touchCount == 1)
         {
             Touch touch = Input.GetTouch(0);
@@ -18,7 +22,7 @@ public class InputSystem : MonoBehaviour
             {
                 _dragOrigin = touch.position;
                 _isDragging = true;
-                TryInteractWithShop(touch.position); // Проверяем взаимодействие
+                TryInteractWithShop(touch.position);
             }
             else if (touch.phase == TouchPhase.Moved && _isDragging)
             {
@@ -34,7 +38,7 @@ public class InputSystem : MonoBehaviour
         {
             _dragOrigin = Input.mousePosition;
             _isDragging = true;
-            TryInteractWithShop(Input.mousePosition); // Проверяем взаимодействие
+            TryInteractWithShop(Input.mousePosition);
         }
         else if (Input.GetMouseButton(0) && _isDragging)
         {
@@ -68,8 +72,23 @@ public class InputSystem : MonoBehaviour
             var shopView = hit.collider.GetComponent<Shop.ShopView>();
             if (shopView != null)
             {
-                shopView.OpenShopPanel(); // Открываем панель
+                shopView.OpenShopPanel();
             }
         }
+    }
+
+    private bool IsPointerOverUI()
+    {
+        if (EventSystem.current.IsPointerOverGameObject())
+            return true;
+
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+            if (EventSystem.current.IsPointerOverGameObject(touch.fingerId))
+                return true;
+        }
+
+        return false;
     }
 }

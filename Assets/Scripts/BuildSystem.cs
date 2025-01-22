@@ -1,46 +1,50 @@
 using System;
+using System.Collections.Generic;
 using Shop;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BuildSystem : MonoBehaviour
 {
-    
     public event Action<ShopData> OnShopPurchased;
     
-    [SerializeField] private ShopData _gardeningShop;
-    [SerializeField] private ShopData _fashionShop;
-    [SerializeField] private ShopData _pawnShop;
-    [SerializeField] private ShopData _magicShop;
-    
+    [Serializable]
+    private struct ShopConfig
+    {
+        public ShopType Type;
+        public int Price;
+        public TextMeshProUGUI PriceText;
+        public Button Button;
+        public ShopData ShopData;
+    }
+
+    [SerializeField] private List<ShopConfig> _shopConfigs;
+
     private void Awake()
     {
-        _gardeningShop.gameObject.SetActive(false);
-        _fashionShop.gameObject.SetActive(false);
-        _pawnShop.gameObject.SetActive(false);
-        _magicShop.gameObject.SetActive(false);
+        foreach (var config in _shopConfigs)
+        {
+            InitializeShop(config);
+            config.ShopData.gameObject.SetActive(false); 
+        }
     }
-    
-    public void BuyGardeningShop()
+
+    private void InitializeShop(ShopConfig config)
     {
-        _gardeningShop.gameObject.SetActive(true);
-        OnShopPurchased?.Invoke(_gardeningShop); 
+        config.PriceText.text = config.Price.ToString();
+        config.Button.onClick.AddListener(() => BuyShop(config));
     }
-    
-    public void BuyFashionShop()
+
+    private void BuyShop(ShopConfig config)
     {
-        _fashionShop.gameObject.SetActive(true);
-        OnShopPurchased?.Invoke(_fashionShop);
-    }
-    
-    public void BuyPawnShop()
-    {
-        _pawnShop.gameObject.SetActive(true);
-        OnShopPurchased?.Invoke(_pawnShop);
-    }
-    
-    public void BuyMagicShop()
-    {
-        _magicShop.gameObject.SetActive(true);
-        OnShopPurchased?.Invoke(_magicShop);
+        if (ResourcesSystem.Instance.SpendMoney(config.Price))
+        {
+            var button = config.Button.GetComponentInParent<ChangeButtonToImage>();
+            button?.Change();
+
+            config.ShopData.gameObject.SetActive(true);
+            OnShopPurchased?.Invoke(config.ShopData);
+        }
     }
 }

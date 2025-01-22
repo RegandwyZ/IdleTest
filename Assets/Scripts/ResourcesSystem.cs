@@ -21,7 +21,7 @@ public class ResourcesSystem : MonoBehaviour
             Destroy(gameObject);
         }
 
-        _money = 100; 
+        _money = 100000; 
     }
 
     public int Money

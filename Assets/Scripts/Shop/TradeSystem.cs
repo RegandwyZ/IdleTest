@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 namespace Shop
@@ -8,10 +9,43 @@ namespace Shop
     {
         [SerializeField] private int _income;
         [SerializeField] private float _tradeTime;
+        
         [SerializeField] private TradeView _tradeView;
         
-        private bool _isTradeRunning = false;
+        [SerializeField] private TextMeshProUGUI _incomeText;
+        [SerializeField] private TextMeshProUGUI _tradeTimeText;
+
+        [SerializeField] private int _multiplier;
+        private int _basicMultiplier;
         
+        private bool _isTradeRunning = false;
+
+        
+        public int Income
+        {
+            get => _income;
+            set
+            {
+                _income = value;
+                UpdateUI();
+            }
+        }
+
+        public float TradeTime
+        {
+            get => _tradeTime;
+            set
+            {
+                _tradeTime = value;
+                UpdateUI();
+            }
+        }
+
+        private void Start()
+        {
+            UpdateUI();
+            _basicMultiplier = _multiplier;
+        }
 
         public void Trade(Action onTradeComplete)
         {
@@ -28,18 +62,28 @@ namespace Shop
             yield return new WaitForSeconds(_tradeTime);
             ResourcesSystem.Instance.AddMoney(_income);
             _isTradeRunning = false;
-            
+
             onTradeComplete?.Invoke();
         }
 
         public void DecreaseTradeTime()
         {
-            _tradeTime -= 0.05f;
+            TradeTime -= 0.05f; 
         }
 
         public void IncreaseIncome()
         {
-            _income += 7;
+            Income += _multiplier;
+            _multiplier += _basicMultiplier;
+        }
+
+        private void UpdateUI()
+        {
+            if (_incomeText != null)
+                _incomeText.text = $"{_income}";
+
+            if (_tradeTimeText != null)
+                _tradeTimeText.text = $"{_tradeTime:F2}";
         }
     }
 }
