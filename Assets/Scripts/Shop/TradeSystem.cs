@@ -41,7 +41,7 @@ namespace Shop
             }
         }
 
-        private void Start()
+        private void Awake()
         {
             UpdateUI();
             _basicMultiplier = _multiplier;

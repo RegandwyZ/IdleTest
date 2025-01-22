@@ -10,12 +10,11 @@ namespace Shop
         [SerializeField] private Transform _shopPoint;
         [SerializeField] private QueuePoint[] _queuePoints;
         
-        private TradeSystem _tradeSystem;
+        [SerializeField] private TradeSystem _tradeSystem;
 
-        private void Start()
+        private void Awake()
         {
             _queuePoints[0].SetTradePoint();
-            _tradeSystem = GetComponent<TradeSystem>();
         }
 
         public void UpgradeTradeTime()

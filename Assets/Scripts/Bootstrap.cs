@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using Shop;
+using UnityEngine.Serialization;
 using CharacterController = Character.CharacterController;
 
 
@@ -8,8 +9,8 @@ public class Bootstrap : MonoBehaviour
 {
     [SerializeField] private CharacterController[] _newCharacterData;
     [SerializeField] private Transform[] _spawnPoints;
-    [SerializeField] private Path _pathToMarket;
-    [SerializeField] private Path _pathToTrain;
+    [FormerlySerializedAs("_pathToMarket")] [SerializeField] private CitizenPath _citizenPathToMarket;
+    [FormerlySerializedAs("_pathToTrain")] [SerializeField] private CitizenPath _citizenPathToTrain;
     [SerializeField] private ShopData[] _startShopData;
     [SerializeField] private Transform _centerPoint;
     [SerializeField] private BuildSystem _buildSystem;
@@ -52,8 +53,8 @@ public class Bootstrap : MonoBehaviour
             ShopData[] shuffledShops = ShuffleShops(_startShopData);
             
             citizen.SetData(shuffledShops, _centerPoint.position);
-            citizen.SetPathToMarketPlace(_pathToMarket);
-            citizen.SetPathToTrainPlace(_pathToTrain);
+            citizen.SetPathToMarketPlace(_citizenPathToMarket);
+            citizen.SetPathToTrainPlace(_citizenPathToTrain);
 
             yield return new WaitForSeconds(0.1f);
         }

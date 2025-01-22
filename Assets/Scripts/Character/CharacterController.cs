@@ -45,15 +45,15 @@ namespace Character
             _currentState = CharacterState.MoveToMarketPlace;
         }
 
-        public void SetPathToMarketPlace(Path path)
+        public void SetPathToMarketPlace(CitizenPath citizenPath)
         {
-            _pointsToMarket = path.GetWayPoints();
+            _pointsToMarket = citizenPath.GetWayPoints();
             _currentPointToMarketIndex = 0;
         }
 
-        public void SetPathToTrainPlace(Path path)
+        public void SetPathToTrainPlace(CitizenPath citizenPath)
         {
-            _pointsToTrain = path.GetWayPoints();
+            _pointsToTrain = citizenPath.GetWayPoints();
             _currentPointToTrainIndex = 0;
         }
 

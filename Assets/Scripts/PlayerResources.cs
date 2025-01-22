@@ -1,5 +1,8 @@
+using PlayerCurrentProgress;
+using SaveSystem;
 using TMPro;
 using UnityEngine;
+
 
 public class PlayerResources : MonoBehaviour
 {
@@ -20,4 +23,6 @@ public class PlayerResources : MonoBehaviour
    {
       _textMoney.text = $"{money}";
    }
+   
+  
 }

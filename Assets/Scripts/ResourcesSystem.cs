@@ -1,4 +1,5 @@
 using System;
+using PlayerCurrentProgress;
 using UnityEngine;
 
 public class ResourcesSystem : MonoBehaviour
@@ -21,7 +22,7 @@ public class ResourcesSystem : MonoBehaviour
             Destroy(gameObject);
         }
 
-        _money = 100000; 
+        _money = CurrentProgress.Instance.CurrentGameData.Money;
     }
 
     public int Money
@@ -37,6 +38,7 @@ public class ResourcesSystem : MonoBehaviour
     public void AddMoney(int amount)
     {
         Money += amount;
+        CurrentProgress.Instance.ChangeMoney(amount); 
     }
 
     public bool SpendMoney(int amount)
@@ -44,6 +46,7 @@ public class ResourcesSystem : MonoBehaviour
         if (_money >= amount)
         {
             Money -= amount;
+            CurrentProgress.Instance.ChangeMoney(-amount); 
             return true;
         }
         else

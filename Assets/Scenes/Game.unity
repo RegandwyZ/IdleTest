@@ -1492,6 +1492,7 @@ MonoBehaviour:
   - {fileID: 237975911}
   - {fileID: 682761238}
   - {fileID: 1840290085}
+  _tradeSystem: {fileID: 0}
 --- !u!4 &21332827
 Transform:
   m_ObjectHideFlags: 0
@@ -4422,6 +4423,7 @@ MonoBehaviour:
   - {fileID: 1656761930}
   - {fileID: 641053081}
   - {fileID: 1137211386}
+  _tradeSystem: {fileID: 0}
 --- !u!4 &97006940
 Transform:
   m_ObjectHideFlags: 0
@@ -5871,8 +5873,8 @@ MonoBehaviour:
   - {fileID: 1311111923}
   - {fileID: 1225620605}
   - {fileID: 674692802}
-  _pathToMarket: {fileID: 1154563875}
-  _pathToTrain: {fileID: 1124433861}
+  _citizenPathToMarket: {fileID: 1154563875}
+  _citizenPathToTrain: {fileID: 1124433861}
   _startShopData:
   - {fileID: 370113918}
   - {fileID: 717720643}
@@ -13132,6 +13134,53 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &308476948
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 308476950}
+  - component: {fileID: 308476949}
+  m_Layer: 0
+  m_Name: PlayerProgress
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &308476949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 308476948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc068cff3c0fba34d92b428cca4bc0b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentGameData:
+    Money: 0
+    Buildings: []
+--- !u!4 &308476950
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 308476948}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &308642048
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -14782,7 +14831,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &357104387
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15817,6 +15866,7 @@ MonoBehaviour:
   - {fileID: 457536702}
   - {fileID: 588669071}
   - {fileID: 1382171029}
+  _tradeSystem: {fileID: 370113919}
 --- !u!114 &370113919
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15873,6 +15923,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb550906d4c747499775c5449a77bd5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _shopType: 0
   _upgradeIncome: {fileID: 1272651048}
   _upgradeTradeTime: {fileID: 1695233453}
   _costUpIncome: 20
@@ -25789,6 +25840,63 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &604590383
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 604590385}
+  - component: {fileID: 604590384}
+  m_Layer: 0
+  m_Name: SaveGameSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &604590384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 604590383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18c057376ff24840b17745a3acbaad93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _autoSaveInterval: 30
+  CurrentGameData:
+    Money: 0
+    Buildings:
+    - BuildingId: 0
+      IncomeLevel: 0
+      TradeTimeLevel: 0
+    - BuildingId: 0
+      IncomeLevel: 0
+      TradeTimeLevel: 0
+    - BuildingId: 0
+      IncomeLevel: 0
+      TradeTimeLevel: 0
+--- !u!4 &604590385
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 604590383}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &617200335
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -29972,6 +30080,7 @@ MonoBehaviour:
   - {fileID: 51155169}
   - {fileID: 1290808805}
   - {fileID: 1770245967}
+  _tradeSystem: {fileID: 0}
 --- !u!4 &717720644
 Transform:
   m_ObjectHideFlags: 0
@@ -44960,6 +45069,7 @@ MonoBehaviour:
   - {fileID: 1557020308}
   - {fileID: 2042649074}
   - {fileID: 809402680}
+  _tradeSystem: {fileID: 0}
 --- !u!114 &1126935397
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -72859,6 +72969,7 @@ MonoBehaviour:
   - {fileID: 1837607127}
   - {fileID: 967445828}
   - {fileID: 1921793612}
+  _tradeSystem: {fileID: 0}
 --- !u!4 &1896166075
 Transform:
   m_ObjectHideFlags: 0
@@ -82653,3 +82764,5 @@ SceneRoots:
   - {fileID: 435166271}
   - {fileID: 1559277037}
   - {fileID: 214083367}
+  - {fileID: 604590385}
+  - {fileID: 308476950}

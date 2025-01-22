@@ -1,13 +1,14 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace DefaultNamespace
 {
     public class AllPathHolder : MonoBehaviour
     {
-        public Path PathToMarket => _pathToMarket;
-        [SerializeField] private Path _pathToMarket;
+        public CitizenPath CitizenPathToMarket => _citizenPathToMarket;
+        [FormerlySerializedAs("_pathToMarket")] [SerializeField] private CitizenPath _citizenPathToMarket;
         
-        public Path PathToTrain => _pathToTrain;
-        [SerializeField] private Path _pathToTrain;
+        public CitizenPath CitizenPathToTrain => _citizenPathToTrain;
+        [FormerlySerializedAs("_pathToTrain")] [SerializeField] private CitizenPath _citizenPathToTrain;
     }
 }

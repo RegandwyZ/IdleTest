@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using PlayerCurrentProgress;
 using Shop;
 using TMPro;
 using UnityEngine;
@@ -28,6 +29,8 @@ public class BuildSystem : MonoBehaviour
             InitializeShop(config);
             config.ShopData.gameObject.SetActive(false); 
         }
+        
+        ActivateExistingShops();
     }
 
     private void InitializeShop(ShopConfig config)
@@ -45,6 +48,28 @@ public class BuildSystem : MonoBehaviour
 
             config.ShopData.gameObject.SetActive(true);
             OnShopPurchased?.Invoke(config.ShopData);
+            CurrentProgress.Instance.AddBuilding(config.Type);
+        }
+    }
+    
+    private void ActivateExistingShops()
+    {
+        var existingBuildings = CurrentProgress.Instance.CurrentGameData.Buildings;
+
+        foreach (var config in _shopConfigs)
+        {
+            if (existingBuildings.Exists(building => building.BuildingId == config.Type))
+            {
+                config.ShopData.gameObject.SetActive(true);
+                
+                var button = config.Button.GetComponentInParent<ChangeButtonToImage>();
+                if (button != null)
+                {
+                    button.Change();
+                }
+                
+                OnShopPurchased?.Invoke(config.ShopData);
+            }
         }
     }
 }

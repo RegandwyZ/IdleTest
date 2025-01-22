@@ -1,7 +1,7 @@
 using UnityEngine;
 
 
-public class Path : MonoBehaviour
+public class CitizenPath : MonoBehaviour
 {
     [SerializeField] private Transform[] _wayPoints;
 
