@@ -18,6 +18,15 @@ namespace Shop
             _tradeSystem = GetComponent<TradeSystem>();
         }
 
+        public void UpgradeTradeTime()
+        {
+            _tradeSystem.DecreaseTradeTime();
+        }
+
+        public void UpgradeIncome()
+        {
+            _tradeSystem.IncreaseIncome();
+        }
         public Transform GetShopPoint()
         {
             return _shopPoint;
@@ -44,10 +53,8 @@ namespace Shop
 
         public void ReleaseQueuePoint(QueuePoint freedPoint)
         {
-
             freedPoint.ClearOccupant();
-
-
+            
             for (int i = 0; i < _queuePoints.Length - 1; i++)
             {
                 if (_queuePoints[i].CurrentState == QueueState.Empty &&

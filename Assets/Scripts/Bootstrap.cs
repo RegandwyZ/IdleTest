@@ -12,8 +12,30 @@ public class Bootstrap : MonoBehaviour
     [SerializeField] private Path _pathToTrain;
     [SerializeField] private ShopData[] _startShopData;
     [SerializeField] private Transform _centerPoint;
+    [SerializeField] private BuildSystem _buildSystem;
     
     private int _count = 12;
+    
+    private void Awake()
+    {
+        _buildSystem.OnShopPurchased += AddShopToArray;
+    }
+
+    private void OnDestroy()
+    {
+        _buildSystem.OnShopPurchased -= AddShopToArray;
+    }
+
+    private void AddShopToArray(ShopData newShop)
+    {
+        var updatedShops = new ShopData[_startShopData.Length + 1];
+        for (int i = 0; i < _startShopData.Length; i++)
+        {
+            updatedShops[i] = _startShopData[i];
+        }
+        updatedShops[^1] = newShop; 
+        _startShopData = updatedShops; 
+    }
     
     public void SpawnNewWay()
     {

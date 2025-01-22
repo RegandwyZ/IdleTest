@@ -2,22 +2,23 @@ using UnityEngine;
 
 public class InputSystem : MonoBehaviour
 {
-    private readonly float _dragSpeed = 0.2f; 
-    private Vector2 _xBounds = new(-100f, 100f); 
-    private Vector2 _zBounds = new(-100f, 100f); 
+    private readonly float _dragSpeed = 0.2f;
+    private Vector2 _xBounds = new(-100f, 100f);
+    private Vector2 _zBounds = new(-100f, 100f);
 
-    private Vector3 _dragOrigin; 
+    private Vector3 _dragOrigin;
     private bool _isDragging = false;
 
     private void Update()
     {
-        if (Input.touchCount == 1) 
+        if (Input.touchCount == 1)
         {
             Touch touch = Input.GetTouch(0);
             if (touch.phase == TouchPhase.Began)
             {
                 _dragOrigin = touch.position;
                 _isDragging = true;
+                TryInteractWithShop(touch.position); // Проверяем взаимодействие
             }
             else if (touch.phase == TouchPhase.Moved && _isDragging)
             {
@@ -29,10 +30,11 @@ public class InputSystem : MonoBehaviour
                 _isDragging = false;
             }
         }
-        else if (Input.GetMouseButtonDown(0)) 
+        else if (Input.GetMouseButtonDown(0))
         {
             _dragOrigin = Input.mousePosition;
             _isDragging = true;
+            TryInteractWithShop(Input.mousePosition); // Проверяем взаимодействие
         }
         else if (Input.GetMouseButton(0) && _isDragging)
         {
@@ -50,11 +52,24 @@ public class InputSystem : MonoBehaviour
     {
         Vector3 move = new Vector3(-delta.x * _dragSpeed, 0, -delta.y * _dragSpeed);
         transform.position += move;
-        
+
         transform.position = new Vector3(
             Mathf.Clamp(transform.position.x, _xBounds.x, _xBounds.y),
             transform.position.y,
             Mathf.Clamp(transform.position.z, _zBounds.x, _zBounds.y)
         );
+    }
+
+    private void TryInteractWithShop(Vector3 screenPosition)
+    {
+        Ray ray = Camera.main.ScreenPointToRay(screenPosition);
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            var shopView = hit.collider.GetComponent<Shop.ShopView>();
+            if (shopView != null)
+            {
+                shopView.OpenShopPanel(); // Открываем панель
+            }
+        }
     }
 }
