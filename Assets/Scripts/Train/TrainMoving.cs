@@ -1,8 +1,7 @@
 using System.Collections;
-using Character;
+using Citizen;
 using UnityEngine;
 using UnityEngine.Serialization;
-using CharacterController = Character.CharacterController;
 
 namespace Train
 {
@@ -47,7 +46,7 @@ namespace Train
 
         private void DeSpawnCharacters()
         {
-            CharacterController[] characters = FindObjectsByType<CharacterController>(sortMode: FindObjectsSortMode.None);
+            CitizenController[] characters = FindObjectsByType<CitizenController>(sortMode: FindObjectsSortMode.None);
             foreach (var character in characters)
             {
                 if (character.IsReadyToLeave) 

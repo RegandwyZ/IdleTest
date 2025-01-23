@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-namespace Character
+namespace Citizen
 {
-    public class CharacterAnimator : MonoBehaviour
+    public class CitizenAnimator : MonoBehaviour
     {
         private static readonly int Idle = Animator.StringToHash("Idle");
         private static readonly int Move = Animator.StringToHash("Move");

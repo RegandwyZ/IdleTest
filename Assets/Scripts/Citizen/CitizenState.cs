@@ -1,6 +1,6 @@
-﻿namespace Character
+﻿namespace Citizen
 {
-    public enum CharacterState
+    public enum CitizenState
     {
         Idle,
         MoveToMarketPlace,

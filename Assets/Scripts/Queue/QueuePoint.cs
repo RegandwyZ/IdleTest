@@ -1,6 +1,5 @@
-﻿using Character;
+﻿using Citizen;
 using UnityEngine;
-using CharacterController = Character.CharacterController;
 
 namespace Queue
 {
@@ -9,7 +8,7 @@ namespace Queue
         public bool IsTradePoint { get; private set; }
         public QueueState CurrentState { get; private set; }
 
-        public CharacterController Occupant { get; private set; }
+        public CitizenController Occupant { get; private set; }
         
         public void SetTradePoint()
         {
@@ -21,7 +20,7 @@ namespace Queue
             CurrentState = newState;
         }
         
-        public void AssignOccupant(CharacterController occupant)
+        public void AssignOccupant(CitizenController occupant)
         {
             Occupant = occupant;
             ChangeState(QueueState.Engaged);

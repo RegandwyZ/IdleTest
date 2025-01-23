@@ -1,7 +1,7 @@
 ﻿using System;
+using Citizen;
 using Queue;
 using UnityEngine;
-using CharacterController = Character.CharacterController;
 
 namespace Shop
 {
@@ -32,7 +32,7 @@ namespace Shop
             return _shopPoint;
         }
         
-        public QueuePoint GetQueuePoint(CharacterController occupant)
+        public QueuePoint GetQueuePoint(CitizenController occupant)
         {
             foreach (var point in _queuePoints)
             {

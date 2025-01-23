@@ -1,13 +1,13 @@
 using System.Collections;
+using Citizen;
 using PathSystem;
 using UnityEngine;
 using Shop;
-using CharacterController = Character.CharacterController;
 
 
 public class SpawnCitizenSystem : MonoBehaviour
 {
-    [SerializeField] private CharacterController[] _newCharacterData;
+    [SerializeField] private CitizenController[] _newCharacterData;
     [SerializeField] private Transform[] _spawnPoints;
     [SerializeField] private ShopData[] _startShopData;
     [SerializeField] private BuildSystem _buildSystem;
@@ -54,8 +54,8 @@ public class SpawnCitizenSystem : MonoBehaviour
             ShopData[] shuffledShops = ShuffleShops(_startShopData);
             
             citizen.SetData(shuffledShops, _centerPoint.position);
-            citizen.SetPathToMarketPlace(_pathHolder.CitizenPathToMarket);
-            citizen.SetPathToTrainPlace(_pathHolder.CitizenPathToTrain);
+            citizen.SetPathTo(_pathHolder.CitizenPathToMarket, _pathHolder.CitizenPathToTrain);
+           
 
             yield return new WaitForSeconds(0.1f);
         }

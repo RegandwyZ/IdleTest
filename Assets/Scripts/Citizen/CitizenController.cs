@@ -6,19 +6,20 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 
-namespace Character
+namespace Citizen
 {
-    public class CharacterController : MonoBehaviour
+    public class CitizenController : MonoBehaviour
     {
         public bool IsReadyToLeave { get; private set; }
         
         [SerializeField] private float _moveSpeed;
         [SerializeField] private float _rotationSpeed;
         
-        [SerializeField] private CharacterAnimator _animator;
+        [SerializeField] private CitizenAnimator _animator;
         
-        private CharacterState _currentState;
-
+        private CitizenState _currentState;
+        private CharacterMovementSystem _movementSystem;
+        
         private Transform[] _pointsToMarket;
         private Transform[] _pointsToTrain;
         private ShopData[] _shops;
@@ -37,27 +38,25 @@ namespace Character
         
         public void SetData(ShopData[] shopData, Vector3 centerPoint)
         {
+            _movementSystem = new CharacterMovementSystem(transform, _animator, _moveSpeed, _rotationSpeed, _pointsToMarket, _pointsToTrain );
             _shops = shopData;
             float randomX = Random.Range(-6f, 6f);
             float randomZ = Random.Range(-6f, 6f);
             
             _centerPoint = centerPoint + new Vector3(randomX, 0, randomZ);
             _currentShopIndex = 0;
-            _currentState = CharacterState.MoveToMarketPlace;
+            _currentState = CitizenState.MoveToMarketPlace;
         }
 
-        public void SetPathToMarketPlace(CitizenPath citizenPath)
+        public void SetPathTo(CitizenPath citizenPathToMarket, CitizenPath citizenPathToTrain)
         {
-            _pointsToMarket = citizenPath.GetWayPoints();
+            _pointsToMarket = citizenPathToMarket.GetWayPoints();
+            _pointsToTrain = citizenPathToTrain.GetWayPoints(); 
+            
+            _currentPointToTrainIndex = 0;
             _currentPointToMarketIndex = 0;
         }
-
-        public void SetPathToTrainPlace(CitizenPath citizenPath)
-        {
-            _pointsToTrain = citizenPath.GetWayPoints();
-            _currentPointToTrainIndex = 0;
-        }
-
+        
         private void Start()
         {
             _animator.SetSpeedAnimation(_moveSpeed);
@@ -67,36 +66,36 @@ namespace Character
         {
             switch (_currentState)
             {
-                case CharacterState.Idle:
+                case CitizenState.Idle:
                     _animator.SetIdleAnimation();
                     break;
 
-                case CharacterState.MoveToMarketPlace:
+                case CitizenState.MoveToMarketPlace:
                     MoveToMarketPlace();
                     break;
 
-                case CharacterState.ToShop:
+                case CitizenState.ToShop:
                     MoveToShop(_currentShop);
                     break;
 
-                case CharacterState.ToQueue:
+                case CitizenState.ToQueue:
                     MoveToShopQueue();
                     break;
 
-                case CharacterState.Trading:
+                case CitizenState.Trading:
                     _animator.SetIdleAnimation();
                     _currentShop.StartTrade(OnTradeComplete);
                     break;
                 
-                case CharacterState.MoveToCenterPoint:
+                case CitizenState.MoveToCenterPoint:
                     MoveToCenterPoint();
                     break;
 
-                case CharacterState.MoveToTrain:
+                case CitizenState.MoveToTrain:
                     MoveToTrain();
                     break;
                 
-                case CharacterState.MoveToTrainPlacePoint:
+                case CitizenState.MoveToTrainPlacePoint:
                     MoveToPlaceNearTrain();
                     break;
                     
@@ -119,13 +118,13 @@ namespace Character
             MoveTo(
                 _pointsToTrain[_currentPointToTrainIndex].position,
                 0.01f,
-                _currentPointToTrainIndex + 1 >= _pointsToTrain.Length ? CharacterState.MoveToTrainPlacePoint : _currentState,
+                _currentPointToTrainIndex + 1 >= _pointsToTrain.Length ? CitizenState.MoveToTrainPlacePoint : _currentState,
                 () =>
                 {
                     _currentPointToTrainIndex++;
                     if (_currentPointToTrainIndex >= _pointsToTrain.Length)
                     {
-                        _currentState = CharacterState.MoveToTrainPlacePoint;
+                        _currentState = CitizenState.MoveToTrainPlacePoint;
                     }
                 }
             );
@@ -136,17 +135,17 @@ namespace Character
             MoveTo(
                 _targetTrainNearPoint,
                 0.5f,
-                CharacterState.Idle,
+                CitizenState.Idle,
                 () =>
                 {
-                    _currentState = CharacterState.Idle;
+                    _currentState = CitizenState.Idle;
                     _animator.SetIdleAnimation();
                     IsReadyToLeave = true;
                 }
             );
         }
 
-        private void MoveTo(Vector3 targetPosition, float stopDistance, CharacterState nextState,
+        private void MoveTo(Vector3 targetPosition, float stopDistance, CitizenState nextState,
             Action onReachTarget = null)
         {
             _animator.SetMoveAnimation();
@@ -183,7 +182,7 @@ namespace Character
             MoveTo(
                 shopData.GetShopPoint().position,
                 0.01f,
-                CharacterState.Idle,
+                CitizenState.Idle,
                 () =>
                 {
                     _queuePoint = shopData.GetQueuePoint(this);
@@ -191,22 +190,23 @@ namespace Character
                     if (_queuePoint == null)
                     {
                         SetNextShop();
-                        _currentState = CharacterState.MoveToCenterPoint;
+                        _currentState = CitizenState.MoveToCenterPoint;
                     }
                     else
                     {
-                        _currentState = CharacterState.ToQueue;
+                        _currentState = CitizenState.ToQueue;
                     }
                 }
             );
         }
+        
         
         private void MoveToShopQueue()
         {
             MoveTo(
                 _queuePoint.transform.position,
                 0.01f,
-                _queuePoint.IsTradePoint ? CharacterState.Trading : CharacterState.Idle,
+                _queuePoint.IsTradePoint ? CitizenState.Trading : CitizenState.Idle,
                 () =>
                 {
                     if (!_queuePoint.IsTradePoint)
@@ -217,18 +217,11 @@ namespace Character
             );
         }
         
-        private void OnTradeComplete()
-        {
-            _currentShop.ReleaseQueuePoint(_queuePoint);
-            _queuePoint = null;
-            
-            SetNextShop();
-            _currentState = CharacterState.MoveToCenterPoint;
-        }
+       
 
         private void MoveToCenterPoint()
         {
-            var state = _isVisitedAllShops ? CharacterState.MoveToTrain : CharacterState.ToShop;
+            var state = _isVisitedAllShops ? CitizenState.MoveToTrain : CitizenState.ToShop;
             
             MoveTo(
                 _centerPoint,
@@ -243,7 +236,7 @@ namespace Character
                 _pointsToMarket[_currentPointToMarketIndex].position,
                 0.01f,
                 _currentPointToMarketIndex + 1 >= _pointsToMarket.Length
-                    ? CharacterState.Idle
+                    ? CitizenState.Idle
                     : _currentState,
                 () =>
                 {
@@ -254,16 +247,24 @@ namespace Character
                         if (_currentShopIndex < _shops.Length)
                         {
                             SetNextShop();
-                            _currentState = CharacterState.ToShop;
+                            _currentState = CitizenState.ToShop;
                         }
                         else
                         {
-                            Debug.Log("Все магазины пройдены!");
-                            _currentState = CharacterState.MoveToTrain;
+                            _currentState = CitizenState.MoveToTrain;
                         }
                     }
                 }
             );
+        }
+        
+        private void OnTradeComplete()
+        {
+            _currentShop.ReleaseQueuePoint(_queuePoint);
+            _queuePoint = null;
+            
+            SetNextShop();
+            _currentState = CitizenState.MoveToCenterPoint;
         }
         
         private void SetNextShop()
@@ -275,7 +276,6 @@ namespace Character
             }
             else
             {
-                Debug.Log("Все магазины пройдены!");
                 _isVisitedAllShops = true;
             }
         }
@@ -283,9 +283,9 @@ namespace Character
         public void SetQueuePoint(QueuePoint newQueuePoint)
         {
             _queuePoint = newQueuePoint;
-            if (_currentState == CharacterState.Idle || _currentState == CharacterState.ToQueue)
+            if (_currentState == CitizenState.Idle || _currentState == CitizenState.ToQueue)
             {
-                _currentState = CharacterState.ToQueue;
+                _currentState = CitizenState.ToQueue;
             }
         }
     }
