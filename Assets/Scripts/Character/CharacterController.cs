@@ -1,4 +1,5 @@
 using System;
+using PathSystem;
 using Queue;
 using Shop;
 using UnityEngine;
@@ -13,7 +14,7 @@ namespace Character
         
         [SerializeField] private float _moveSpeed;
         [SerializeField] private float _rotationSpeed;
-
+        
         [SerializeField] private CharacterAnimator _animator;
         
         private CharacterState _currentState;
@@ -33,7 +34,7 @@ namespace Character
         private Vector3 _targetTrainNearPoint;
         private Vector3 _previousPosition;
         
-       
+        
         public void SetData(ShopData[] shopData, Vector3 centerPoint)
         {
             _shops = shopData;
@@ -55,6 +56,11 @@ namespace Character
         {
             _pointsToTrain = citizenPath.GetWayPoints();
             _currentPointToTrainIndex = 0;
+        }
+
+        private void Start()
+        {
+            _animator.SetSpeedAnimation(_moveSpeed);
         }
 
         private void Update()
@@ -185,7 +191,6 @@ namespace Character
                     if (_queuePoint == null)
                     {
                         SetNextShop();
-                        
                         _currentState = CharacterState.MoveToCenterPoint;
                     }
                     else

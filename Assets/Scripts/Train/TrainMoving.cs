@@ -10,7 +10,7 @@ namespace Train
     {
         [SerializeField] private Transform _pointA; 
         [SerializeField] private Transform _pointB; 
-        [FormerlySerializedAs("_spawnSystem")] [FormerlySerializedAs("_spawnNewWayCharacter")] [SerializeField] private Bootstrap _bootstrap;
+        [FormerlySerializedAs("_bootstrap")] [FormerlySerializedAs("_spawnSystem")] [FormerlySerializedAs("_spawnNewWayCharacter")] [SerializeField] private SpawnCitizenSystem _spawnCitizenSystem;
         
         private readonly float _speed = 25f; 
 
@@ -24,7 +24,7 @@ namespace Train
             while (true)
             {
                 yield return StartCoroutine(MoveToPoint(_pointB.position));
-                _bootstrap.SpawnNewWay();
+                _spawnCitizenSystem.SpawnNewWay();
                 yield return new WaitForSeconds(7f);
                 
                 DeSpawnCharacters();

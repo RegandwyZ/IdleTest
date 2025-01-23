@@ -24,7 +24,7 @@ public class InputSystem : MonoBehaviour
 
     private void HandleMovement()
     {
-        if (Input.touchCount == 1)
+        /*if (Input.touchCount == 1)
         {
             Touch touch = Input.GetTouch(0);
 
@@ -43,8 +43,8 @@ public class InputSystem : MonoBehaviour
                 _isDragging = false;
                 TryInteractWithShop(touch.position);
             }
-        }
-        else if (Input.GetMouseButtonDown(0)) 
+        }*/
+        if (Input.GetMouseButtonDown(0)) 
         {
             _dragOrigin = Input.mousePosition;
             _isDragging = true;

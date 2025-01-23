@@ -1,14 +1,12 @@
-using PlayerCurrentProgress;
-using SaveSystem;
 using TMPro;
 using UnityEngine;
 
 
-public class PlayerResources : MonoBehaviour
+public class PlayerResourcesUI : MonoBehaviour
 {
    [SerializeField] private TextMeshProUGUI _textMoney;
 
-   private void Awake()
+   private void Start()
    {
       ResourcesSystem.Instance.OnMoneyChanged += UpdateMoneyText;
       UpdateMoneyText(ResourcesSystem.Instance.Money); 

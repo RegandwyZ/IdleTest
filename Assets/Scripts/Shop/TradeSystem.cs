@@ -20,8 +20,8 @@ namespace Shop
         
         private bool _isTradeRunning = false;
 
-        
-        public int Income
+
+        private int Income
         {
             get => _income;
             set
@@ -31,7 +31,7 @@ namespace Shop
             }
         }
 
-        public float TradeTime
+        private float TradeTime
         {
             get => _tradeTime;
             set
@@ -58,6 +58,7 @@ namespace Shop
 
         private IEnumerator StartTradeCoroutine(Action onTradeComplete)
         {
+            _tradeView.SetMoneyForTrade(_income);
             _tradeView.ShowProgress(_tradeTime);
             yield return new WaitForSeconds(_tradeTime);
             ResourcesSystem.Instance.AddMoney(_income);

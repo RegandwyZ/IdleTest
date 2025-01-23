@@ -6,7 +6,7 @@ namespace Character
     {
         private static readonly int Idle = Animator.StringToHash("Idle");
         private static readonly int Move = Animator.StringToHash("Move");
-        private static readonly int Run = Animator.StringToHash("Run");
+        private static readonly int Speed = Animator.StringToHash("Speed");
         
         private Animator _animator;
 
@@ -24,6 +24,10 @@ namespace Character
         {
             _animator.SetTrigger(Move);
         }
-        
+
+        public void SetSpeedAnimation(float moveSpeed)
+        {
+            _animator.SetFloat(Speed, moveSpeed);
+        }
     }
 }

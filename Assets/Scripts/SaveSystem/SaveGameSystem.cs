@@ -14,27 +14,26 @@ namespace SaveSystem
         
         public GameData CurrentGameData;
 
-        private void Awake()
+        public void InitializeSaveGameSystem()
         {
             GameData loadedData = SaveSystem.LoadGame();
             if (loadedData != null)
             {
                 CurrentGameData = loadedData;
-                ApplyLoadedData();
             }
             else
             {
                 CurrentGameData = new GameData
                 {
-                    Money = 1000,
+                    Money = 1000000,
                     Buildings = new List<BuildingData>()
                 };
                 
                 AddCandyShopAtFirstTime();
                 AddFruitShopAtFirstTime();
-                
-                ApplyLoadedData();
             }
+
+            ApplyLoadedData();
         }
 
         private void AddFruitShopAtFirstTime()
@@ -68,6 +67,11 @@ namespace SaveSystem
             {
                 ClearAllData();
             }
+
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                SaveSystem.SaveGame(CurrentGameData);
+            }
         }
 
         private IEnumerator AutoSaveCoroutine()
@@ -81,7 +85,7 @@ namespace SaveSystem
         
         public void SaveCurrentGame()
         {
-            SaveSystem.SaveGame(CurrentProgress.Instance.CurrentGameData);
+           // SaveSystem.SaveGame(CurrentProgress.Instance.CurrentGameData);
         }
 
         
@@ -92,7 +96,7 @@ namespace SaveSystem
 
         private void OnApplicationQuit()
         {
-            SaveCurrentGame();
+            //SaveCurrentGame();
         }
         
         public void ClearAllData()

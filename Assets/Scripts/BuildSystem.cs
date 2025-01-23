@@ -22,7 +22,7 @@ public class BuildSystem : MonoBehaviour
 
     [SerializeField] private List<ShopConfig> _shopConfigs;
 
-    private void Awake()
+    public void InitializeShopConfigs()
     {
         foreach (var config in _shopConfigs)
         {
@@ -69,6 +69,7 @@ public class BuildSystem : MonoBehaviour
                 }
                 
                 OnShopPurchased?.Invoke(config.ShopData);
+                CurrentProgress.Instance.AddBuilding(config.Type);
             }
         }
     }

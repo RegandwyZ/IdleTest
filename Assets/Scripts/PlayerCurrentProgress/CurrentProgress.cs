@@ -10,7 +10,8 @@ namespace PlayerCurrentProgress
         public static CurrentProgress Instance { get; private set; }
         public GameData CurrentGameData;
 
-        private void Awake()
+        
+        public void InitializeCurrentGameData()
         {
             if (Instance != null && Instance != this)
             {
@@ -18,7 +19,7 @@ namespace PlayerCurrentProgress
                 return;
             }
             Instance = this;
-
+            
             if (CurrentGameData == null)
             {
                 CurrentGameData = new GameData
