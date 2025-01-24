@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 
+
 namespace SaveSystem
 {
     [Serializable]
@@ -8,6 +9,7 @@ namespace SaveSystem
     {
         public int Money;
         public List<BuildingData> Buildings;
+        public bool NorthBridge;
     }
     
 }

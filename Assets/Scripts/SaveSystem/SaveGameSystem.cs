@@ -40,7 +40,7 @@ namespace SaveSystem
         {
             CurrentGameData.Buildings.Add(new BuildingData
             {
-                BuildingId = ShopType.Fruit,
+                BuildingId = ShopType.Coffee,
                 IncomeLevel = 1,
                 TradeTimeLevel = 1
             });
@@ -70,7 +70,7 @@ namespace SaveSystem
 
             if (Input.GetKeyDown(KeyCode.A))
             {
-                SaveSystem.SaveGame(CurrentGameData);
+                SaveSystem.SaveGame(CurrentProgress.Instance.CurrentGameData);
             }
         }
 

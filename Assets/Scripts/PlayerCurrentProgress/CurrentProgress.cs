@@ -27,10 +27,9 @@ namespace PlayerCurrentProgress
                     Buildings = new List<BuildingData>()
                 };
             }
-           
         }
         
-        
+
         public void ChangeMoney(int amount)
         {
             if (CurrentGameData == null) return;
@@ -51,6 +50,12 @@ namespace PlayerCurrentProgress
                 TradeTimeLevel = 1
             });
            
+        }
+
+        public void AddNorthBridge()
+        {
+            if (CurrentGameData == null) return;
+            CurrentGameData.NorthBridge = true;
         }
 
         

@@ -1,4 +1,5 @@
-﻿using PlayerCurrentProgress;
+﻿using Bridge;
+using PlayerCurrentProgress;
 using SaveSystem;
 using UnityEngine;
 
@@ -11,13 +12,16 @@ namespace EntryPoint
         [SerializeField] private BuildSystem _buildSystem;
         [SerializeField] private SpawnCitizenSystem _spawnCitizenSystem;
         [SerializeField] private ResourcesSystem _resourcesSystem;
+        [SerializeField] private BridgeController _bridgeController;
         private void Awake()
         {
             _spawnCitizenSystem.Initialize();
             _currentProgress.InitializeCurrentGameData();
             _saveGameSystem.InitializeSaveGameSystem();
             _buildSystem.InitializeShopConfigs();
+            _buildSystem.InitializeBridges();
             _resourcesSystem.InitializeResourcesSystem();
+            _bridgeController.BridgeInitialize();
 
         }
     }

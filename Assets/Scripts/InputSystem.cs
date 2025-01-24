@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 
 public class InputSystem : MonoBehaviour
 {
-    private readonly float _dragSpeed = 0.2f;
+    private readonly float _dragSpeed = 0.1f;
     private readonly float _zoomSpeed = 5f;
     private Vector2 _xBounds = new(-100f, 100f);
     private Vector2 _zBounds = new(-100f, 100f);
@@ -24,7 +24,7 @@ public class InputSystem : MonoBehaviour
 
     private void HandleMovement()
     {
-        /*if (Input.touchCount == 1)
+        if (Input.touchCount == 1)
         {
             Touch touch = Input.GetTouch(0);
 
@@ -43,7 +43,7 @@ public class InputSystem : MonoBehaviour
                 _isDragging = false;
                 TryInteractWithShop(touch.position);
             }
-        }*/
+        }
         if (Input.GetMouseButtonDown(0)) 
         {
             _dragOrigin = Input.mousePosition;

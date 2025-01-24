@@ -7,7 +7,7 @@ namespace Shop
 {
     public class ShopData : MonoBehaviour
     {
-        [SerializeField] private Transform _shopPoint;
+        [SerializeField] private Transform[] _shopPoint;
         [SerializeField] private QueuePoint[] _queuePoints;
         
         [SerializeField] private TradeSystem _tradeSystem;
@@ -27,7 +27,7 @@ namespace Shop
             _tradeSystem.IncreaseIncome();
         }
         
-        public Transform GetShopPoint()
+        public Transform[] GetShopPoints()
         {
             return _shopPoint;
         }

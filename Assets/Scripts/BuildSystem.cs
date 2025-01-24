@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using PlayerCurrentProgress;
 using Shop;
 using TMPro;
+using UI;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,7 +23,7 @@ public class BuildSystem : MonoBehaviour
     }
 
     [SerializeField] private List<ShopConfig> _shopConfigs;
-
+    [SerializeField] private Bridge.Bridge _northBridge;
     public void InitializeShopConfigs()
     {
         foreach (var config in _shopConfigs)
@@ -34,6 +35,18 @@ public class BuildSystem : MonoBehaviour
         ActivateExistingShops();
     }
 
+    public void InitializeBridges()
+    {
+        bool isEnabled = CurrentProgress.Instance.CurrentGameData.NorthBridge;
+        if (isEnabled)
+        {
+            _northBridge.gameObject.SetActive(true);
+        }
+        else
+        {
+            _northBridge.gameObject.SetActive(false);
+        }
+    }
     private void InitializeShop(ShopConfig config)
     {
         config.PriceText.text = config.Price.ToString();

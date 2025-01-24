@@ -3,10 +3,13 @@
     public enum ShopType
     {
         Candy,
-        Fruit,
+        Coffee,
         Gardening,
         Fashion,
         Pawn,
-        Magic
+        Magic,
+        Beauty,
+        HyperMarket,
+        Estate
     }
 }

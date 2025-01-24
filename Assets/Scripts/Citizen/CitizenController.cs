@@ -2,6 +2,7 @@ using System;
 using PathSystem;
 using Queue;
 using Shop;
+using UI;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -14,20 +15,22 @@ namespace Citizen
         
         [SerializeField] private float _moveSpeed;
         [SerializeField] private float _rotationSpeed;
-        
+        [SerializeField] private SmileyController _smileyController;
         [SerializeField] private CitizenAnimator _animator;
         
         private CitizenState _currentState;
         private CharacterMovementSystem _movementSystem;
         
-        private Transform[] _pointsToMarket;
+        private Transform[] _pointsToShop;
+        private Transform[] _pointsToTown;
         private Transform[] _pointsToTrain;
         private ShopData[] _shops;
         private ShopData _currentShop;
 
         private QueuePoint _queuePoint;
 
-        private int _currentPointToMarketIndex;
+        private int _currentPointToShopIndex;
+        private int _currentPointToTownIndex;
         private int _currentPointToTrainIndex;
         private int _currentShopIndex;
         private bool _isVisitedAllShops;
@@ -38,10 +41,10 @@ namespace Citizen
         
         public void SetData(ShopData[] shopData, Vector3 centerPoint)
         {
-            _movementSystem = new CharacterMovementSystem(transform, _animator, _moveSpeed, _rotationSpeed, _pointsToMarket, _pointsToTrain );
+            _movementSystem = new CharacterMovementSystem(transform, _animator, _moveSpeed, _rotationSpeed, _pointsToTown, _pointsToTrain );
             _shops = shopData;
-            float randomX = Random.Range(-6f, 6f);
-            float randomZ = Random.Range(-6f, 6f);
+            float randomX = Random.Range(-0.5f, 0.5f);
+            float randomZ = Random.Range(-0.5f, 0.5f);
             
             _centerPoint = centerPoint + new Vector3(randomX, 0, randomZ);
             _currentShopIndex = 0;
@@ -50,11 +53,11 @@ namespace Citizen
 
         public void SetPathTo(CitizenPath citizenPathToMarket, CitizenPath citizenPathToTrain)
         {
-            _pointsToMarket = citizenPathToMarket.GetWayPoints();
+            _pointsToTown = citizenPathToMarket.GetWayPoints();
             _pointsToTrain = citizenPathToTrain.GetWayPoints(); 
             
             _currentPointToTrainIndex = 0;
-            _currentPointToMarketIndex = 0;
+            _currentPointToTownIndex = 0;
         }
         
         private void Start()
@@ -111,7 +114,7 @@ namespace Citizen
             
             Vector3 baseTrainPoint = _pointsToTrain[^1].position;
                 
-            float randomX = Random.Range(-2f, 10f);
+            float randomX = Random.Range(-2f, -10f);
             float randomZ = Random.Range(-1f, 1f);
 
             _targetTrainNearPoint = baseTrainPoint + new Vector3(randomX, 0, randomZ);
@@ -179,70 +182,74 @@ namespace Citizen
         
         private void MoveToShop(ShopData shopData)
         {
+            _pointsToShop = shopData.GetShopPoints();
             MoveTo(
-                shopData.GetShopPoint().position,
+                _pointsToShop[_currentPointToShopIndex].position,
                 0.01f,
-                CitizenState.Idle,
+                _currentPointToShopIndex + 1 >= _pointsToShop.Length
+                    ? CitizenState.Idle
+                    : _currentState,
                 () =>
                 {
-                    _queuePoint = shopData.GetQueuePoint(this);
+                    _currentPointToShopIndex++;
 
-                    if (_queuePoint == null)
+                    if (_currentPointToShopIndex >= _pointsToShop.Length)
                     {
-                        SetNextShop();
-                        _currentState = CitizenState.MoveToCenterPoint;
-                    }
-                    else
-                    {
-                        _currentState = CitizenState.ToQueue;
-                    }
-                }
-            );
-        }
-        
-        
-        private void MoveToShopQueue()
-        {
-            MoveTo(
-                _queuePoint.transform.position,
-                0.01f,
-                _queuePoint.IsTradePoint ? CitizenState.Trading : CitizenState.Idle,
-                () =>
-                {
-                    if (!_queuePoint.IsTradePoint)
-                    {
-                        _animator.SetIdleAnimation();
+                        _queuePoint = shopData.GetQueuePoint(this);
+
+                        if (_queuePoint == null)
+                        {
+                            SetNextShop();
+                            _smileyController.ShowSmiley();
+                            _currentState = CitizenState.MoveToCenterPoint;
+                        }
+                        else
+                        {
+                            _currentState = CitizenState.ToQueue;
+                        }
                     }
                 }
             );
         }
         
-       
 
         private void MoveToCenterPoint()
         {
-            var state = _isVisitedAllShops ? CitizenState.MoveToTrain : CitizenState.ToShop;
-            
-            MoveTo(
-                _centerPoint,
-                0.01f,
-                state
-            );
+            if (_currentPointToShopIndex <= 0)
+            {
+                MoveTo(
+                    _centerPoint,
+                    0.01f,
+                    _isVisitedAllShops ? CitizenState.MoveToTrain : CitizenState.ToShop
+                );
+            }
+            else
+            {
+                MoveTo(
+                    _pointsToShop[_currentPointToShopIndex - 1].position,
+                    0.01f,
+                    CitizenState.MoveToCenterPoint,
+                    () =>
+                    {
+                        _currentPointToShopIndex--;
+                    }
+                );
+            }
         }
 
         private void MoveToMarketPlace()
         {
             MoveTo(
-                _pointsToMarket[_currentPointToMarketIndex].position,
+                _pointsToTown[_currentPointToTownIndex].position,
                 0.01f,
-                _currentPointToMarketIndex + 1 >= _pointsToMarket.Length
+                _currentPointToTownIndex + 1 >= _pointsToTown.Length
                     ? CitizenState.Idle
                     : _currentState,
                 () =>
                 {
-                    _currentPointToMarketIndex++;
+                    _currentPointToTownIndex++;
 
-                    if (_currentPointToMarketIndex >= _pointsToMarket.Length)
+                    if (_currentPointToTownIndex >= _pointsToTown.Length)
                     {
                         if (_currentShopIndex < _shops.Length)
                         {
@@ -278,6 +285,22 @@ namespace Citizen
             {
                 _isVisitedAllShops = true;
             }
+        }
+        
+        private void MoveToShopQueue()
+        {
+            MoveTo(
+                _queuePoint.transform.position,
+                0.01f,
+                _queuePoint.IsTradePoint ? CitizenState.Trading : CitizenState.Idle,
+                () =>
+                {
+                    if (!_queuePoint.IsTradePoint)
+                    {
+                        _animator.SetIdleAnimation();
+                    }
+                }
+            );
         }
         
         public void SetQueuePoint(QueuePoint newQueuePoint)
