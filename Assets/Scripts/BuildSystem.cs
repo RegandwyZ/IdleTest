@@ -18,6 +18,7 @@ public class BuildSystem : MonoBehaviour
         public TextMeshProUGUI PriceText;
         public Button Button;
         public ShopData ShopData;
+        public ChangeButtonToImage ChangeButtonToImage;
     }
 
     [SerializeField] private List<ShopConfig> _shopConfigs;
@@ -43,8 +44,10 @@ public class BuildSystem : MonoBehaviour
     {
         if (ResourcesSystem.Instance.SpendMoney(config.Price))
         {
-            var button = config.Button.GetComponentInParent<ChangeButtonToImage>();
-            button?.Change();
+            if (config.ChangeButtonToImage != null)
+            {
+                config.ChangeButtonToImage.Change();
+            }
 
             config.ShopData.gameObject.SetActive(true);
             OnShopPurchased?.Invoke(config.ShopData);
@@ -62,10 +65,9 @@ public class BuildSystem : MonoBehaviour
             {
                 config.ShopData.gameObject.SetActive(true);
                 
-                var button = config.Button.GetComponentInParent<ChangeButtonToImage>();
-                if (button != null)
+                if (config.ChangeButtonToImage != null)
                 {
-                    button.Change();
+                    config.ChangeButtonToImage.Change();
                 }
                 
                 OnShopPurchased?.Invoke(config.ShopData);

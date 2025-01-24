@@ -10,7 +10,7 @@ public class ResourcesSystem : MonoBehaviour
 
     private int _money;
 
-    private void Awake()
+    public void InitializeResourcesSystem()
     {
         if (Instance == null)
         {
