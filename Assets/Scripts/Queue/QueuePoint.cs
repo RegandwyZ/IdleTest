@@ -15,7 +15,7 @@ namespace Queue
             IsTradePoint = true;
         }
         
-        public void ChangeState(QueueState newState)
+        private void ChangeState(QueueState newState)
         {
             CurrentState = newState;
         }

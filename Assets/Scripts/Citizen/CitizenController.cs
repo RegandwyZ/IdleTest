@@ -19,7 +19,6 @@ namespace Citizen
         [SerializeField] private CitizenAnimator _animator;
         
         private CitizenState _currentState;
-        private CharacterMovementSystem _movementSystem;
         
         private Transform[] _pointsToShop;
         private Transform[] _pointsToTown;
@@ -41,7 +40,6 @@ namespace Citizen
         
         public void SetData(ShopData[] shopData, Vector3 centerPoint)
         {
-            _movementSystem = new CharacterMovementSystem(transform, _animator, _moveSpeed, _rotationSpeed, _pointsToTown, _pointsToTrain );
             _shops = shopData;
             float randomX = Random.Range(-0.5f, 0.5f);
             float randomZ = Random.Range(-0.5f, 0.5f);
