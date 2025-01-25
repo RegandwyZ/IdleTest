@@ -1,17 +1,22 @@
 using System.Collections;
 using Citizen;
+using SpawnSystem;
 using UnityEngine;
-using UnityEngine.Serialization;
+
 
 namespace Train
 {
     public class TrainMoving : MonoBehaviour
     {
-        [SerializeField] private Transform _pointA; 
-        [SerializeField] private Transform _pointB; 
-        [FormerlySerializedAs("_bootstrap")] [FormerlySerializedAs("_spawnSystem")] [FormerlySerializedAs("_spawnNewWayCharacter")] [SerializeField] private SpawnCitizenSystem _spawnCitizenSystem;
-        
-        private readonly float _speed = 25f; 
+        [SerializeField] private Transform _pointA;
+        [SerializeField] private Transform _pointB;
+
+        [SerializeField] private SpawnCitizenSystem _spawnCitizenSystem;
+
+        private const float SPEED = 15f;
+
+        private const float STATION_STOP_DURATION = 7f;
+        private const float TRAIN_AWAY_DURATION = 7f;
 
         private void Start()
         {
@@ -24,12 +29,12 @@ namespace Train
             {
                 yield return StartCoroutine(MoveToPoint(_pointB.position));
                 _spawnCitizenSystem.SpawnNewWay();
-                yield return new WaitForSeconds(7f);
-                
+                yield return new WaitForSeconds(STATION_STOP_DURATION);
+
                 DeSpawnCharacters();
-                
+
                 yield return StartCoroutine(MoveToPoint(_pointA.position));
-                yield return new WaitForSeconds(5f);
+                yield return new WaitForSeconds(TRAIN_AWAY_DURATION);
             }
         }
 
@@ -37,10 +42,10 @@ namespace Train
         {
             while (Vector3.Distance(transform.position, target) > 0.01f)
             {
-                transform.position = Vector3.MoveTowards(transform.position, target, _speed * Time.deltaTime);
-                yield return null; 
+                transform.position = Vector3.MoveTowards(transform.position, target, SPEED * Time.deltaTime);
+                yield return null;
             }
-        
+
             transform.position = target;
         }
 
@@ -49,7 +54,7 @@ namespace Train
             CitizenController[] characters = FindObjectsByType<CitizenController>(sortMode: FindObjectsSortMode.None);
             foreach (var character in characters)
             {
-                if (character.IsReadyToLeave) 
+                if (character.IsReadyToLeave)
                 {
                     Destroy(character.gameObject);
                 }

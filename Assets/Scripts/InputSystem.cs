@@ -3,11 +3,12 @@ using UnityEngine.EventSystems;
 
 public class InputSystem : MonoBehaviour
 {
-    private readonly float _dragSpeed = 0.1f;
-    private readonly float _zoomSpeed = 5f;
-    private Vector2 _xBounds = new(-100f, 100f);
-    private Vector2 _zBounds = new(-100f, 100f);
-    private Vector2 _zoomBounds = new(10f, 60f);
+    private const float DRAG_SPEED = 0.03f;
+    private const float ZOOM_SPEED = 15f;
+    
+    private readonly Vector2 _xBounds = new(-40f, 30f);
+    private readonly Vector2 _zBounds = new(-30f, 60f);
+    private readonly Vector2 _zoomBounds = new(10f, 50f);
 
     private Vector3 _dragOrigin;
     private bool _isDragging = false;
@@ -67,7 +68,7 @@ public class InputSystem : MonoBehaviour
         float scroll = Input.GetAxis("Mouse ScrollWheel");
         if (scroll != 0)
         {
-            ZoomCamera(scroll * _zoomSpeed);
+            ZoomCamera(scroll * ZOOM_SPEED);
         }
         
         if (Input.touchCount == 2)
@@ -90,7 +91,7 @@ public class InputSystem : MonoBehaviour
     private void MoveCamera(Vector3 delta)
     {
        
-        Vector3 move = new Vector3(-delta.x * _dragSpeed, 0, -delta.y * _dragSpeed);
+        Vector3 move = new Vector3(-delta.x * DRAG_SPEED, 0, -delta.y * DRAG_SPEED);
         Vector3 moveInWorld = transform.TransformDirection(move);
         moveInWorld.y = 0; 
 
@@ -116,7 +117,7 @@ public class InputSystem : MonoBehaviour
             return false;
 
         Ray ray = Camera.main.ScreenPointToRay(screenPosition);
-        if (Physics.Raycast(ray, out RaycastHit hit))
+        if (Physics.Raycast(ray, out var hit))
         {
             var shopView = hit.collider.GetComponent<Shop.ShopView>();
             if (shopView != null)

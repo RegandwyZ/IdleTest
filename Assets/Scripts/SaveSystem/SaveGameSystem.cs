@@ -25,7 +25,7 @@ namespace SaveSystem
             {
                 CurrentGameData = new GameData
                 {
-                    Money = 2000,
+                    Money = 2000000,
                     Buildings = new List<BuildingData>()
                 };
                 

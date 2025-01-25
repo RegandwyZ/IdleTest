@@ -2640,10 +2640,10 @@ RectTransform:
   - {fileID: 131195980}
   m_Father: {fileID: 375330676}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 539.5, y: -1152.5}
+  m_SizeDelta: {x: 1000, y: 225}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &59792089
 MonoBehaviour:
@@ -5899,12 +5899,14 @@ MonoBehaviour:
   _shopType: 8
   _upgradeIncome: {fileID: 2054224208}
   _upgradeTradeTime: {fileID: 838863810}
-  _costUpIncome: 78
+  _costUpIncome: 873
   _costIncomeText: {fileID: 172974488}
-  _costTradeTime: 36
+  _costTradeTime: 798
   _costTradeTimeText: {fileID: 1627089418}
-  _incomeMultiplier: 22
-  _tradeMultiplier: 15
+  _incomeMultiplier: 785
+  _tradeMultiplier: 657
+  _incomeCountBlock: 175
+  _tradeCountBlock: 155
 --- !u!114 &115681509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5932,12 +5934,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 118106b2a6fa4d90b6143d62b8a40869, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _income: 34
+  _income: 873
   _tradeTime: 9
   _tradeView: {fileID: 115681509}
   _incomeText: {fileID: 1730385072}
   _tradeTimeText: {fileID: 1930940498}
-  _multiplier: 7
+  _multiplier: 344
 --- !u!114 &115681511
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6388,12 +6390,14 @@ MonoBehaviour:
   _shopType: 2
   _upgradeIncome: {fileID: 1596156419}
   _upgradeTradeTime: {fileID: 77604698}
-  _costUpIncome: 78
+  _costUpIncome: 57
   _costIncomeText: {fileID: 157252041}
   _costTradeTime: 36
   _costTradeTimeText: {fileID: 1272789191}
   _incomeMultiplier: 22
-  _tradeMultiplier: 15
+  _tradeMultiplier: 11
+  _incomeCountBlock: 60
+  _tradeCountBlock: 95
 --- !u!114 &123148800
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6422,11 +6426,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _income: 34
-  _tradeTime: 9
+  _tradeTime: 6
   _tradeView: {fileID: 123148800}
   _incomeText: {fileID: 2003289089}
   _tradeTimeText: {fileID: 2115200957}
-  _multiplier: 7
+  _multiplier: 11
 --- !u!114 &123148802
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7081,10 +7085,7 @@ MonoBehaviour:
   - {fileID: 1311111923}
   - {fileID: 1225620605}
   - {fileID: 674692802}
-  _startShopData:
-  - {fileID: 370113918}
-  - {fileID: 1618067683}
-  _buildSystem: {fileID: 1167811751}
+  _activeShopHolder: {fileID: 1718261627}
   _pathHolder: {fileID: 633561894}
 --- !u!4 &140256453
 Transform:
@@ -18562,7 +18563,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _income: 10
-  _tradeTime: 4
+  _tradeTime: 5
   _tradeView: {fileID: 370113920}
   _incomeText: {fileID: 414682373}
   _tradeTimeText: {fileID: 265653485}
@@ -18610,12 +18611,14 @@ MonoBehaviour:
   _shopType: 0
   _upgradeIncome: {fileID: 1272651048}
   _upgradeTradeTime: {fileID: 1695233453}
-  _costUpIncome: 20
+  _costUpIncome: 14
   _costIncomeText: {fileID: 455269142}
-  _costTradeTime: 15
+  _costTradeTime: 19
   _costTradeTimeText: {fileID: 1648640126}
-  _incomeMultiplier: 15
-  _tradeMultiplier: 9
+  _incomeMultiplier: 19
+  _tradeMultiplier: 12
+  _incomeCountBlock: 75
+  _tradeCountBlock: 75
 --- !u!65 &370113923
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -22197,10 +22200,10 @@ RectTransform:
   - {fileID: 1730683529}
   m_Father: {fileID: 375330676}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 539.5, y: -632.5}
+  m_SizeDelta: {x: 1000, y: 225}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &434952885
 MonoBehaviour:
@@ -25871,10 +25874,10 @@ RectTransform:
   - {fileID: 21528776}
   m_Father: {fileID: 375330676}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 539.5, y: -1672.5}
+  m_SizeDelta: {x: 1000, y: 225}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &512954439
 MonoBehaviour:
@@ -35611,10 +35614,10 @@ RectTransform:
   - {fileID: 2032994562}
   m_Father: {fileID: 375330676}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 539.5, y: -372.5}
+  m_SizeDelta: {x: 1000, y: 225}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &718036399
 MonoBehaviour:
@@ -40509,12 +40512,14 @@ MonoBehaviour:
   _shopType: 7
   _upgradeIncome: {fileID: 1408673462}
   _upgradeTradeTime: {fileID: 1805624683}
-  _costUpIncome: 78
+  _costUpIncome: 322
   _costIncomeText: {fileID: 1021838264}
-  _costTradeTime: 36
+  _costTradeTime: 356
   _costTradeTimeText: {fileID: 1652440476}
-  _incomeMultiplier: 22
-  _tradeMultiplier: 15
+  _incomeMultiplier: 321
+  _tradeMultiplier: 312
+  _incomeCountBlock: 130
+  _tradeCountBlock: 135
 --- !u!114 &815221308
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40542,12 +40547,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 118106b2a6fa4d90b6143d62b8a40869, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _income: 34
-  _tradeTime: 9
+  _income: 225
+  _tradeTime: 8
   _tradeView: {fileID: 815221308}
   _incomeText: {fileID: 941531153}
   _tradeTimeText: {fileID: 1239212097}
-  _multiplier: 7
+  _multiplier: 215
 --- !u!114 &815221310
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43974,12 +43979,14 @@ MonoBehaviour:
   _shopType: 3
   _upgradeIncome: {fileID: 756563043}
   _upgradeTradeTime: {fileID: 648454893}
-  _costUpIncome: 78
+  _costUpIncome: 63
   _costIncomeText: {fileID: 1395765670}
-  _costTradeTime: 36
+  _costTradeTime: 22
   _costTradeTimeText: {fileID: 1930850904}
   _incomeMultiplier: 22
-  _tradeMultiplier: 15
+  _tradeMultiplier: 25
+  _incomeCountBlock: 80
+  _tradeCountBlock: 95
 --- !u!114 &887018630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44007,12 +44014,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 118106b2a6fa4d90b6143d62b8a40869, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _income: 34
-  _tradeTime: 9
+  _income: 55
+  _tradeTime: 6
   _tradeView: {fileID: 887018630}
   _incomeText: {fileID: 1443051483}
   _tradeTimeText: {fileID: 29601679}
-  _multiplier: 7
+  _multiplier: 14
 --- !u!114 &887018632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -48340,6 +48347,7 @@ GameObject:
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
   - component: {fileID: 963194229}
+  - component: {fileID: 963194230}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -48431,6 +48439,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e399aa89a6b6cdb4eb33ad4f6d3c2ef8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &963194230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b69f47f1b56ba84492d08afdef1db8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!23 &964615405
@@ -49162,12 +49182,14 @@ MonoBehaviour:
   _shopType: 6
   _upgradeIncome: {fileID: 1177666814}
   _upgradeTradeTime: {fileID: 282823488}
-  _costUpIncome: 78
+  _costUpIncome: 115
   _costIncomeText: {fileID: 1572176815}
-  _costTradeTime: 36
+  _costTradeTime: 140
   _costTradeTimeText: {fileID: 1538136874}
-  _incomeMultiplier: 22
-  _tradeMultiplier: 15
+  _incomeMultiplier: 250
+  _tradeMultiplier: 225
+  _incomeCountBlock: 120
+  _tradeCountBlock: 135
 --- !u!114 &987245304
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49195,12 +49217,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 118106b2a6fa4d90b6143d62b8a40869, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _income: 34
-  _tradeTime: 9
+  _income: 151
+  _tradeTime: 8
   _tradeView: {fileID: 987245304}
   _incomeText: {fileID: 1661944014}
   _tradeTimeText: {fileID: 1432440304}
-  _multiplier: 7
+  _multiplier: 55
 --- !u!114 &987245306
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68446,12 +68468,14 @@ MonoBehaviour:
   _shopType: 5
   _upgradeIncome: {fileID: 96463628}
   _upgradeTradeTime: {fileID: 236886136}
-  _costUpIncome: 78
+  _costUpIncome: 92
   _costIncomeText: {fileID: 390518313}
-  _costTradeTime: 36
+  _costTradeTime: 42
   _costTradeTimeText: {fileID: 1593128897}
-  _incomeMultiplier: 22
-  _tradeMultiplier: 15
+  _incomeMultiplier: 33
+  _tradeMultiplier: 32
+  _incomeCountBlock: 80
+  _tradeCountBlock: 115
 --- !u!114 &1405917231
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68479,12 +68503,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 118106b2a6fa4d90b6143d62b8a40869, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _income: 34
-  _tradeTime: 9
+  _income: 99
+  _tradeTime: 7
   _tradeView: {fileID: 1405917231}
   _incomeText: {fileID: 512367786}
   _tradeTimeText: {fileID: 744323032}
-  _multiplier: 7
+  _multiplier: 21
 --- !u!114 &1405917233
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70025,10 +70049,10 @@ RectTransform:
   - {fileID: 1838980464}
   m_Father: {fileID: 375330676}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 539.5, y: -1412.5}
+  m_SizeDelta: {x: 1000, y: 225}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1434733899
 MonoBehaviour:
@@ -77956,10 +77980,10 @@ RectTransform:
   - {fileID: 1912028076}
   m_Father: {fileID: 375330676}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 539.5, y: -892.5}
+  m_SizeDelta: {x: 1000, y: 225}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1607017406
 MonoBehaviour:
@@ -78302,12 +78326,14 @@ MonoBehaviour:
   _shopType: 1
   _upgradeIncome: {fileID: 1658315961}
   _upgradeTradeTime: {fileID: 1620040413}
-  _costUpIncome: 17
+  _costUpIncome: 21
   _costIncomeText: {fileID: 1955403787}
-  _costTradeTime: 8
+  _costTradeTime: 20
   _costTradeTimeText: {fileID: 1774026205}
-  _incomeMultiplier: 11
-  _tradeMultiplier: 5
+  _incomeMultiplier: 13
+  _tradeMultiplier: 13
+  _incomeCountBlock: 75
+  _tradeCountBlock: 95
 --- !u!114 &1618067681
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78335,12 +78361,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 118106b2a6fa4d90b6143d62b8a40869, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _income: 4
+  _income: 12
   _tradeTime: 6
   _tradeView: {fileID: 1618067681}
   _incomeText: {fileID: 1448151485}
   _tradeTimeText: {fileID: 2063882821}
-  _multiplier: 5
+  _multiplier: 8
 --- !u!114 &1618067683
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83688,6 +83714,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1716118801}
   m_CullTransparentMesh: 1
+--- !u!1 &1718261626
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1718261628}
+  - component: {fileID: 1718261627}
+  m_Layer: 0
+  m_Name: ActiveShops
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1718261627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1718261626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ba300b8a2c44e6a8ab6f00575cbff20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _startShopData:
+  - {fileID: 370113918}
+  - {fileID: 1618067683}
+  _buildSystem: {fileID: 1167811751}
+--- !u!4 &1718261628
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1718261626}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1718349374
 GameObject:
   m_ObjectHideFlags: 0
@@ -86666,10 +86740,10 @@ RectTransform:
   - {fileID: 849394226}
   m_Father: {fileID: 375330676}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 539.5, y: -112.5}
+  m_SizeDelta: {x: 1000, y: 225}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1772741598
 MonoBehaviour:
@@ -89452,8 +89526,10 @@ MonoBehaviour:
   _costIncomeText: {fileID: 906913231}
   _costTradeTime: 36
   _costTradeTimeText: {fileID: 1683664581}
-  _incomeMultiplier: 22
-  _tradeMultiplier: 15
+  _incomeMultiplier: 27
+  _tradeMultiplier: 27
+  _incomeCountBlock: 95
+  _tradeCountBlock: 95
 --- !u!114 &1839127130
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89481,12 +89557,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 118106b2a6fa4d90b6143d62b8a40869, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _income: 34
-  _tradeTime: 9
+  _income: 67
+  _tradeTime: 6
   _tradeView: {fileID: 1839127130}
   _incomeText: {fileID: 105041909}
   _tradeTimeText: {fileID: 356202025}
-  _multiplier: 7
+  _multiplier: 17
 --- !u!114 &1839127132
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -103456,7 +103532,7 @@ MonoBehaviour:
   _currentProgress: {fileID: 308476949}
   _saveGameSystem: {fileID: 604590384}
   _buildSystem: {fileID: 1167811751}
-  _spawnCitizenSystem: {fileID: 140256452}
+  _activeShops: {fileID: 1718261627}
   _resourcesSystem: {fileID: 1559277036}
   _bridgeController: {fileID: 219398887}
 --- !u!4 &2141330117
@@ -104257,3 +104333,4 @@ SceneRoots:
   - {fileID: 604590385}
   - {fileID: 308476950}
   - {fileID: 219398886}
+  - {fileID: 1718261628}

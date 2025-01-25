@@ -15,6 +15,7 @@ namespace Citizen
         
         [SerializeField] private float _moveSpeed;
         [SerializeField] private float _rotationSpeed;
+        
         [SerializeField] private SmileyController _smileyController;
         [SerializeField] private CitizenAnimator _animator;
         
@@ -23,6 +24,7 @@ namespace Citizen
         private Transform[] _pointsToShop;
         private Transform[] _pointsToTown;
         private Transform[] _pointsToTrain;
+        
         private ShopData[] _shops;
         private ShopData _currentShop;
 
@@ -32,12 +34,15 @@ namespace Citizen
         private int _currentPointToTownIndex;
         private int _currentPointToTrainIndex;
         private int _currentShopIndex;
+        
         private bool _isVisitedAllShops;
+        
         private Vector3 _centerPoint;
         private Vector3 _targetTrainNearPoint;
         private Vector3 _previousPosition;
         
-        
+        private const float STOP_DISTANCE = 0.01f;
+
         public void SetData(ShopData[] shopData, Vector3 centerPoint)
         {
             _shops = shopData;
@@ -56,13 +61,10 @@ namespace Citizen
             
             _currentPointToTrainIndex = 0;
             _currentPointToTownIndex = 0;
-        }
-        
-        private void Start()
-        {
+            
             _animator.SetSpeedAnimation(_moveSpeed);
         }
-
+        
         private void Update()
         {
             switch (_currentState)
@@ -110,15 +112,14 @@ namespace Citizen
                 return;
             }
             
-            Vector3 baseTrainPoint = _pointsToTrain[^1].position;
+            var baseTrainPoint = _pointsToTrain[^1].position;
                 
-            float randomX = Random.Range(-2f, -10f);
-            float randomZ = Random.Range(-1f, 1f);
+            var randomX = Random.Range(-2f, -10f);
+            var randomZ = Random.Range(-1f, 1f);
 
             _targetTrainNearPoint = baseTrainPoint + new Vector3(randomX, 0, randomZ);
             MoveTo(
                 _pointsToTrain[_currentPointToTrainIndex].position,
-                0.01f,
                 _currentPointToTrainIndex + 1 >= _pointsToTrain.Length ? CitizenState.MoveToTrainPlacePoint : _currentState,
                 () =>
                 {
@@ -135,7 +136,6 @@ namespace Citizen
         {
             MoveTo(
                 _targetTrainNearPoint,
-                0.5f,
                 CitizenState.Idle,
                 () =>
                 {
@@ -146,7 +146,7 @@ namespace Citizen
             );
         }
 
-        private void MoveTo(Vector3 targetPosition, float stopDistance, CitizenState nextState,
+        private void MoveTo(Vector3 targetPosition, CitizenState nextState,
             Action onReachTarget = null)
         {
             _animator.SetMoveAnimation();
@@ -169,7 +169,7 @@ namespace Citizen
                 _moveSpeed * Time.deltaTime
             );
 
-            if (direction.magnitude < stopDistance)
+            if (direction.magnitude < STOP_DISTANCE)
             {
                 _animator.SetIdleAnimation();
                 _currentState = nextState;
@@ -181,9 +181,7 @@ namespace Citizen
         private void MoveToShop(ShopData shopData)
         {
             _pointsToShop = shopData.GetShopPoints();
-            MoveTo(
-                _pointsToShop[_currentPointToShopIndex].position,
-                0.01f,
+            MoveTo(_pointsToShop[_currentPointToShopIndex].position,
                 _currentPointToShopIndex + 1 >= _pointsToShop.Length
                     ? CitizenState.Idle
                     : _currentState,
@@ -210,14 +208,12 @@ namespace Citizen
             );
         }
         
-
         private void MoveToCenterPoint()
         {
             if (_currentPointToShopIndex <= 0)
             {
                 MoveTo(
                     _centerPoint,
-                    0.01f,
                     _isVisitedAllShops ? CitizenState.MoveToTrain : CitizenState.ToShop
                 );
             }
@@ -225,7 +221,6 @@ namespace Citizen
             {
                 MoveTo(
                     _pointsToShop[_currentPointToShopIndex - 1].position,
-                    0.01f,
                     CitizenState.MoveToCenterPoint,
                     () =>
                     {
@@ -239,7 +234,6 @@ namespace Citizen
         {
             MoveTo(
                 _pointsToTown[_currentPointToTownIndex].position,
-                0.01f,
                 _currentPointToTownIndex + 1 >= _pointsToTown.Length
                     ? CitizenState.Idle
                     : _currentState,
@@ -289,7 +283,6 @@ namespace Citizen
         {
             MoveTo(
                 _queuePoint.transform.position,
-                0.01f,
                 _queuePoint.IsTradePoint ? CitizenState.Trading : CitizenState.Idle,
                 () =>
                 {
@@ -304,7 +297,7 @@ namespace Citizen
         public void SetQueuePoint(QueuePoint newQueuePoint)
         {
             _queuePoint = newQueuePoint;
-            if (_currentState == CitizenState.Idle || _currentState == CitizenState.ToQueue)
+            if (_currentState is CitizenState.Idle or CitizenState.ToQueue)
             {
                 _currentState = CitizenState.ToQueue;
             }
