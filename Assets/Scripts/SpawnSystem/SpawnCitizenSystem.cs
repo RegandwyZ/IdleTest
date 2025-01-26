@@ -36,7 +36,7 @@ namespace SpawnSystem
             {
                 var randomIndex = Random.Range(0, _newCharacterData.Length);
                 var citizen = Instantiate(_newCharacterData[randomIndex], _spawnPoints[i % _spawnPoints.Length].position, _spawnPoints[i % _spawnPoints.Length].rotation);
-
+                citizen.ConfigureCitizen();
                 var shuffledShops = _activeShopHolder.GetShops();
             
                 citizen.SetData(shuffledShops, _pathHolder.CentralPoint.position);

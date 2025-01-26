@@ -9,6 +9,8 @@ using UnityEngine;
 
 namespace Citizen
 {
+    [RequireComponent(typeof(CitizenMovement))]
+    [RequireComponent(typeof(CitizenStateMachine))]
     public class CitizenController : MonoBehaviour
     {
         public bool IsReadyToLeave { get; set; }
@@ -17,7 +19,7 @@ namespace Citizen
         [SerializeField] private float _rotationSpeed = 5f;
         [SerializeField] private SmileyController _smileyController;
         [SerializeField] private CitizenAnimator _animator;
-        
+
         public CitizenMovement Movement { get; private set; }
         private CitizenStateMachine StateMachine { get; set; }
         public SmileyController SmileyController => _smileyController;
@@ -25,13 +27,13 @@ namespace Citizen
         public float MoveSpeed => _moveSpeed;
         public float RotationSpeed => _rotationSpeed;
 
-        private void Awake()
+        
+        public void ConfigureCitizen()
         {
             Movement = GetComponent<CitizenMovement>();
             StateMachine = GetComponent<CitizenStateMachine>();
-            
+
             Movement.Init(this);
-            
             StateMachine.Init(this);
         }
 
@@ -39,20 +41,42 @@ namespace Citizen
         {
             StateMachine.UpdateState();
         }
-        
+
         public void SetData(ShopData[] shopData, Vector3 centerPoint)
         {
-            StateMachine.SetData(shopData, centerPoint);
+            var context = StateMachine.Context;
+            context.Shops = shopData;
+            
+            CalculateRandomizedCenterPoint(centerPoint, context);   
+            Debug.Log(context.CenterPoint);
+            StateMachine.SetState(CitizenState.MoveToMarketPlace);
         }
-        
-        public void SetPathTo(CitizenPath citizenPathToMarket, CitizenPath citizenPathToTrain)
+
+        private void CalculateRandomizedCenterPoint(Vector3 centerPoint, CitizenContext context)
         {
-            StateMachine.SetPathTo(citizenPathToMarket, citizenPathToTrain);
+            var randomX = Random.Range(-1.5f, 1.5f);
+            var randomZ = Random.Range(-1.5f, 1.5f);
+            
+            context.CenterPoint = centerPoint + new Vector3(randomX, 0, randomZ);
         }
-        
+
+        public void SetPathTo(CitizenPath pathToMarket, CitizenPath pathToTrain)
+        {
+            var context = StateMachine.Context;
+            context.PointsToTown = pathToMarket.GetWayPoints();
+            context.PointsToTrain = pathToTrain.GetWayPoints();
+
+            context.CurrentPointToTownIndex = 0;
+            context.CurrentPointToTrainIndex = 0;
+
+            Animator.SetSpeedAnimation(_moveSpeed);
+        }
+
         public void SetQueuePoint(QueuePoint newQueuePoint)
         {
-            StateMachine.SetQueuePoint(newQueuePoint);
+            var context = StateMachine.Context;
+            context.QueuePoint = newQueuePoint;
+            StateMachine.SetState(CitizenState.ToQueue);
         }
     }
 }

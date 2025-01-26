@@ -4,8 +4,8 @@ namespace Citizen
 {
     public class CitizenAnimator : MonoBehaviour
     {
-        private static readonly int Idle = Animator.StringToHash("Idle");
-        private static readonly int Move = Animator.StringToHash("Move");
+        
+        private static readonly int Move = Animator.StringToHash("IsMoving");
         private static readonly int Speed = Animator.StringToHash("Speed");
         
         private Animator _animator;
@@ -17,12 +17,12 @@ namespace Citizen
 
         public void SetIdleAnimation()
         {
-            _animator.SetTrigger(Idle);
+            _animator.SetBool(Move, false);
         }
 
         public void SetMoveAnimation()
         {
-            _animator.SetTrigger(Move);
+            _animator.SetBool(Move, true);
         }
 
         public void SetSpeedAnimation(float moveSpeed)
