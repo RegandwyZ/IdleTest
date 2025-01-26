@@ -1926,6 +1926,8 @@ GameObject:
   - component: {fileID: 1666916856634628598}
   - component: {fileID: 1619302490039931589}
   - component: {fileID: -6979280439128701201}
+  - component: {fileID: 1900365872654046222}
+  - component: {fileID: -4023016544644459486}
   m_Layer: 0
   m_Name: SimpleCitizens_4
   m_TagString: Untagged
@@ -2028,6 +2030,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spriteRenderer: {fileID: 2919896233870199138}
   _showTime: 2
+--- !u!114 &1900365872654046222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6401681227093693008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dc218e7d1364bc3906b6bed12dfaa5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-4023016544644459486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6401681227093693008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4894fd86950b4dcb85dd7d1734bbddb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6562296075458190551
 GameObject:
   m_ObjectHideFlags: 0

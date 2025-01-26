@@ -1,304 +1,58 @@
-using System;
+
 using PathSystem;
 using Queue;
 using Shop;
 using UI;
 using UnityEngine;
-using Random = UnityEngine.Random;
+
 
 
 namespace Citizen
 {
     public class CitizenController : MonoBehaviour
     {
-        public bool IsReadyToLeave { get; private set; }
+        public bool IsReadyToLeave { get; set; }
 
-        [SerializeField] private float _moveSpeed;
-        [SerializeField] private float _rotationSpeed;
-
+        [SerializeField] private float _moveSpeed = 1f;
+        [SerializeField] private float _rotationSpeed = 5f;
         [SerializeField] private SmileyController _smileyController;
         [SerializeField] private CitizenAnimator _animator;
+        
+        public CitizenMovement Movement { get; private set; }
+        private CitizenStateMachine StateMachine { get; set; }
+        public SmileyController SmileyController => _smileyController;
+        public CitizenAnimator Animator => _animator;
+        public float MoveSpeed => _moveSpeed;
+        public float RotationSpeed => _rotationSpeed;
 
-        private CitizenState _currentState;
-
-        private Transform[] _pointsToShop;
-        private Transform[] _pointsToTown;
-        private Transform[] _pointsToTrain;
-
-        private ShopData[] _shops;
-        private ShopData _currentShop;
-
-        private QueuePoint _queuePoint;
-
-        private int _currentPointToShopIndex;
-        private int _currentPointToTownIndex;
-        private int _currentPointToTrainIndex;
-        private int _currentShopIndex;
-
-        private bool _isVisitedAllShops;
-
-        private Vector3 _centerPoint;
-        private Vector3 _targetTrainNearPoint;
-        private Vector3 _previousPosition;
-
-        private const float STOP_DISTANCE = 0.01f;
-
-        public void SetData(ShopData[] shopData, Vector3 centerPoint)
+        private void Awake()
         {
-            _shops = shopData;
-            float randomX = Random.Range(-0.5f, 0.5f);
-            float randomZ = Random.Range(-0.5f, 0.5f);
-
-            _centerPoint = centerPoint + new Vector3(randomX, 0, randomZ);
-            _currentShopIndex = 0;
-            _currentState = CitizenState.MoveToMarketPlace;
-        }
-
-        public void SetPathTo(CitizenPath citizenPathToMarket, CitizenPath citizenPathToTrain)
-        {
-            _pointsToTown = citizenPathToMarket.GetWayPoints();
-            _pointsToTrain = citizenPathToTrain.GetWayPoints();
-
-            _currentPointToTrainIndex = 0;
-            _currentPointToTownIndex = 0;
-
-            _animator.SetSpeedAnimation(_moveSpeed);
+            Movement = GetComponent<CitizenMovement>();
+            StateMachine = GetComponent<CitizenStateMachine>();
+            
+            Movement.Init(this);
+            
+            StateMachine.Init(this);
         }
 
         private void Update()
         {
-            switch (_currentState)
-            {
-                case CitizenState.Idle:
-                    _animator.SetIdleAnimation();
-                    break;
-
-                case CitizenState.MoveToMarketPlace:
-                    MoveToMarketPlace();
-                    break;
-
-                case CitizenState.ToShop:
-                    MoveToShop(_currentShop);
-                    break;
-
-                case CitizenState.ToQueue:
-                    MoveToShopQueue();
-                    break;
-
-                case CitizenState.Trading:
-                    _animator.SetIdleAnimation();
-                    _currentShop.StartTrade(OnTradeComplete);
-                    break;
-
-                case CitizenState.MoveToCenterPoint:
-                    MoveToCenterPoint();
-                    break;
-
-                case CitizenState.MoveToTrain:
-                    MoveToTrain();
-                    break;
-
-                case CitizenState.MoveToTrainPlacePoint:
-                    MoveToPlaceNearTrain();
-                    break;
-            }
+            StateMachine.UpdateState();
         }
-
-        private void MoveToTrain()
+        
+        public void SetData(ShopData[] shopData, Vector3 centerPoint)
         {
-            if (_currentPointToTrainIndex >= _pointsToTrain.Length)
-            {
-                return;
-            }
-
-            var baseTrainPoint = _pointsToTrain[^1].position;
-
-            var randomX = Random.Range(-2f, -10f);
-            var randomZ = Random.Range(-1f, 1f);
-
-            _targetTrainNearPoint = baseTrainPoint + new Vector3(randomX, 0, randomZ);
-            MoveTo(
-                _pointsToTrain[_currentPointToTrainIndex].position,
-                _currentPointToTrainIndex + 1 >= _pointsToTrain.Length
-                    ? CitizenState.MoveToTrainPlacePoint
-                    : _currentState,
-                () =>
-                {
-                    _currentPointToTrainIndex++;
-                    if (_currentPointToTrainIndex >= _pointsToTrain.Length)
-                    {
-                        _currentState = CitizenState.MoveToTrainPlacePoint;
-                    }
-                }
-            );
+            StateMachine.SetData(shopData, centerPoint);
         }
-
-        private void MoveToPlaceNearTrain()
+        
+        public void SetPathTo(CitizenPath citizenPathToMarket, CitizenPath citizenPathToTrain)
         {
-            MoveTo(
-                _targetTrainNearPoint,
-                CitizenState.Idle,
-                () =>
-                {
-                    _currentState = CitizenState.Idle;
-                    _animator.SetIdleAnimation();
-                    IsReadyToLeave = true;
-                }
-            );
+            StateMachine.SetPathTo(citizenPathToMarket, citizenPathToTrain);
         }
-
-        private void MoveTo(Vector3 targetPosition, CitizenState nextState,
-            Action onReachTarget = null)
-        {
-            _animator.SetMoveAnimation();
-
-            Vector3 direction = targetPosition - transform.position;
-
-            if (direction.sqrMagnitude > 0.0001f)
-            {
-                Quaternion lookRotation = Quaternion.LookRotation(direction);
-                transform.rotation = Quaternion.Slerp(
-                    transform.rotation,
-                    lookRotation,
-                    _rotationSpeed * Time.deltaTime
-                );
-            }
-
-            transform.position = Vector3.MoveTowards(
-                transform.position,
-                targetPosition,
-                _moveSpeed * Time.deltaTime
-            );
-
-            if (direction.magnitude < STOP_DISTANCE)
-            {
-                _animator.SetIdleAnimation();
-                _currentState = nextState;
-
-                onReachTarget?.Invoke();
-            }
-        }
-
-        private void MoveToShop(ShopData shopData)
-        {
-            _pointsToShop = shopData.GetShopPoints();
-            MoveTo(_pointsToShop[_currentPointToShopIndex].position,
-                _currentPointToShopIndex + 1 >= _pointsToShop.Length
-                    ? CitizenState.Idle
-                    : _currentState,
-                () =>
-                {
-                    _currentPointToShopIndex++;
-
-                    if (_currentPointToShopIndex >= _pointsToShop.Length)
-                    {
-                        _queuePoint = shopData.GetQueuePoint(this);
-
-                        if (_queuePoint == null)
-                        {
-                            SetNextShop();
-                            _smileyController.ShowSmiley();
-                            _currentState = CitizenState.MoveToCenterPoint;
-                        }
-                        else
-                        {
-                            _currentState = CitizenState.ToQueue;
-                        }
-                    }
-                }
-            );
-        }
-
-        private void MoveToCenterPoint()
-        {
-            if (_currentPointToShopIndex <= 0)
-            {
-                MoveTo(
-                    _centerPoint,
-                    _isVisitedAllShops ? CitizenState.MoveToTrain : CitizenState.ToShop
-                );
-            }
-            else
-            {
-                MoveTo(
-                    _pointsToShop[_currentPointToShopIndex - 1].position,
-                    CitizenState.MoveToCenterPoint,
-                    () => { _currentPointToShopIndex--; }
-                );
-            }
-        }
-
-        private void MoveToMarketPlace()
-        {
-            MoveTo(
-                _pointsToTown[_currentPointToTownIndex].position,
-                _currentPointToTownIndex + 1 >= _pointsToTown.Length
-                    ? CitizenState.Idle
-                    : _currentState,
-                () =>
-                {
-                    _currentPointToTownIndex++;
-
-                    if (_currentPointToTownIndex >= _pointsToTown.Length)
-                    {
-                        if (_currentShopIndex < _shops.Length)
-                        {
-                            SetNextShop();
-                            _currentState = CitizenState.ToShop;
-                        }
-                        else
-                        {
-                            _currentState = CitizenState.MoveToTrain;
-                        }
-                    }
-                }
-            );
-        }
-
-        private void OnTradeComplete()
-        {
-            _currentShop.ReleaseQueuePoint(_queuePoint);
-            _queuePoint = null;
-
-            SetNextShop();
-            _currentState = CitizenState.MoveToCenterPoint;
-        }
-
-        private void SetNextShop()
-        {
-            if (_currentShopIndex < _shops.Length)
-            {
-                _currentShop = _shops[_currentShopIndex];
-                _currentShopIndex++;
-            }
-            else
-            {
-                _isVisitedAllShops = true;
-            }
-        }
-
-        private void MoveToShopQueue()
-        {
-            MoveTo(
-                _queuePoint.transform.position,
-                _queuePoint.IsTradePoint ? CitizenState.Trading : CitizenState.Idle,
-                () =>
-                {
-                    if (!_queuePoint.IsTradePoint)
-                    {
-                        _animator.SetIdleAnimation();
-                    }
-                }
-            );
-        }
-
+        
         public void SetQueuePoint(QueuePoint newQueuePoint)
         {
-            _queuePoint = newQueuePoint;
-            if (_currentState is CitizenState.Idle or CitizenState.ToQueue)
-            {
-                _currentState = CitizenState.ToQueue;
-            }
+            StateMachine.SetQueuePoint(newQueuePoint);
         }
     }
 }

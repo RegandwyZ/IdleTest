@@ -2535,10 +2535,10 @@ RectTransform:
   - {fileID: 131195980}
   m_Father: {fileID: 375330676}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 539.5, y: -1152.5}
-  m_SizeDelta: {x: 1000, y: 225}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &59792089
 MonoBehaviour:
@@ -19732,10 +19732,10 @@ RectTransform:
   - {fileID: 1730683529}
   m_Father: {fileID: 375330676}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 539.5, y: -632.5}
-  m_SizeDelta: {x: 1000, y: 225}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &434952885
 MonoBehaviour:
@@ -22993,10 +22993,10 @@ RectTransform:
   - {fileID: 21528776}
   m_Father: {fileID: 375330676}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 539.5, y: -1672.5}
-  m_SizeDelta: {x: 1000, y: 225}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &512954439
 MonoBehaviour:
@@ -31677,10 +31677,10 @@ RectTransform:
   - {fileID: 2032994562}
   m_Father: {fileID: 375330676}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 539.5, y: -372.5}
-  m_SizeDelta: {x: 1000, y: 225}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &718036399
 MonoBehaviour:
@@ -62327,10 +62327,10 @@ RectTransform:
   - {fileID: 1838980464}
   m_Father: {fileID: 375330676}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 539.5, y: -1412.5}
-  m_SizeDelta: {x: 1000, y: 225}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1434733899
 MonoBehaviour:
@@ -69256,10 +69256,10 @@ RectTransform:
   - {fileID: 1912028076}
   m_Father: {fileID: 375330676}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 539.5, y: -892.5}
-  m_SizeDelta: {x: 1000, y: 225}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1607017406
 MonoBehaviour:
@@ -76972,10 +76972,10 @@ RectTransform:
   - {fileID: 849394226}
   m_Father: {fileID: 375330676}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 539.5, y: -112.5}
-  m_SizeDelta: {x: 1000, y: 225}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1772741598
 MonoBehaviour:
@@ -92014,11 +92014,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8953284361226453661, guid: 82c0cad0f2cb9f14c919787528b65a79, type: 3}
       propertyPath: _tradeUpgradeLimit
-      value: 3
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8953284361226453661, guid: 82c0cad0f2cb9f14c919787528b65a79, type: 3}
       propertyPath: _incomeUpgradeLimit
-      value: 3
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8953284361226453661, guid: 82c0cad0f2cb9f14c919787528b65a79, type: 3}
       propertyPath: _initialCostTradeTime
@@ -92065,6 +92065,30 @@ PrefabInstance:
       propertyPath: _costTradeTimeText
       value: 
       objectReference: {fileID: 1930850904}
+    - target: {fileID: 3503454830677786991, guid: d46ab00c313bc3f4ca2ce56cace2572d, type: 3}
+      propertyPath: _initialCostIncome
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3503454830677786991, guid: d46ab00c313bc3f4ca2ce56cace2572d, type: 3}
+      propertyPath: _tradeUpgradeLimit
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3503454830677786991, guid: d46ab00c313bc3f4ca2ce56cace2572d, type: 3}
+      propertyPath: _incomeUpgradeLimit
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3503454830677786991, guid: d46ab00c313bc3f4ca2ce56cace2572d, type: 3}
+      propertyPath: _initialCostTradeTime
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3503454830677786991, guid: d46ab00c313bc3f4ca2ce56cace2572d, type: 3}
+      propertyPath: _tradeMultiplierIncrement
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3503454830677786991, guid: d46ab00c313bc3f4ca2ce56cace2572d, type: 3}
+      propertyPath: _incomeMultiplierIncrement
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 4106482887482320027, guid: d46ab00c313bc3f4ca2ce56cace2572d, type: 3}
       propertyPath: _incomeText
       value: 
@@ -92284,6 +92308,30 @@ PrefabInstance:
       propertyPath: _costTradeTimeText
       value: 
       objectReference: {fileID: 1538136874}
+    - target: {fileID: 4318611549242733266, guid: c0eb56de337b97244a77e6ba1db3455c, type: 3}
+      propertyPath: _initialCostIncome
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4318611549242733266, guid: c0eb56de337b97244a77e6ba1db3455c, type: 3}
+      propertyPath: _tradeUpgradeLimit
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4318611549242733266, guid: c0eb56de337b97244a77e6ba1db3455c, type: 3}
+      propertyPath: _incomeUpgradeLimit
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4318611549242733266, guid: c0eb56de337b97244a77e6ba1db3455c, type: 3}
+      propertyPath: _initialCostTradeTime
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4318611549242733266, guid: c0eb56de337b97244a77e6ba1db3455c, type: 3}
+      propertyPath: _tradeMultiplierIncrement
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4318611549242733266, guid: c0eb56de337b97244a77e6ba1db3455c, type: 3}
+      propertyPath: _incomeMultiplierIncrement
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 6406691596266859826, guid: c0eb56de337b97244a77e6ba1db3455c, type: 3}
       propertyPath: _shopPanel
       value: 
@@ -92323,11 +92371,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 980272807496728447, guid: 08ea393c102f2244ebf76e9b86019642, type: 3}
       propertyPath: _tradeUpgradeLimit
-      value: 1
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 980272807496728447, guid: 08ea393c102f2244ebf76e9b86019642, type: 3}
       propertyPath: _incomeUpgradeLimit
-      value: 1
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 980272807496728447, guid: 08ea393c102f2244ebf76e9b86019642, type: 3}
       propertyPath: _initialCostTradeTime
@@ -92438,6 +92486,30 @@ PrefabInstance:
       propertyPath: _costTradeTimeText
       value: 
       objectReference: {fileID: 1627089418}
+    - target: {fileID: 2974846305659420518, guid: 205a2d41a43525044ba27c5d43cc833b, type: 3}
+      propertyPath: _initialCostIncome
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2974846305659420518, guid: 205a2d41a43525044ba27c5d43cc833b, type: 3}
+      propertyPath: _tradeUpgradeLimit
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2974846305659420518, guid: 205a2d41a43525044ba27c5d43cc833b, type: 3}
+      propertyPath: _incomeUpgradeLimit
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2974846305659420518, guid: 205a2d41a43525044ba27c5d43cc833b, type: 3}
+      propertyPath: _initialCostTradeTime
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2974846305659420518, guid: 205a2d41a43525044ba27c5d43cc833b, type: 3}
+      propertyPath: _tradeMultiplierIncrement
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2974846305659420518, guid: 205a2d41a43525044ba27c5d43cc833b, type: 3}
+      propertyPath: _incomeMultiplierIncrement
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 5056247484870293225, guid: 205a2d41a43525044ba27c5d43cc833b, type: 3}
       propertyPath: _shopPanel
       value: 
@@ -92683,6 +92755,30 @@ PrefabInstance:
       propertyPath: _costTradeTimeText
       value: 
       objectReference: {fileID: 1683664581}
+    - target: {fileID: 109159005484666292, guid: 29848ba465fcaa747a3910c3c79123df, type: 3}
+      propertyPath: _initialCostIncome
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 109159005484666292, guid: 29848ba465fcaa747a3910c3c79123df, type: 3}
+      propertyPath: _tradeUpgradeLimit
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 109159005484666292, guid: 29848ba465fcaa747a3910c3c79123df, type: 3}
+      propertyPath: _incomeUpgradeLimit
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 109159005484666292, guid: 29848ba465fcaa747a3910c3c79123df, type: 3}
+      propertyPath: _initialCostTradeTime
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 109159005484666292, guid: 29848ba465fcaa747a3910c3c79123df, type: 3}
+      propertyPath: _tradeMultiplierIncrement
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 109159005484666292, guid: 29848ba465fcaa747a3910c3c79123df, type: 3}
+      propertyPath: _incomeMultiplierIncrement
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 5074820267569443614, guid: 29848ba465fcaa747a3910c3c79123df, type: 3}
       propertyPath: m_Name
       value: PawnShop
@@ -92820,6 +92916,30 @@ PrefabInstance:
       propertyPath: _costTradeTimeText
       value: 
       objectReference: {fileID: 1593128897}
+    - target: {fileID: 4473262442447166126, guid: 4393a211a340c0947a676adbf6ac4d9a, type: 3}
+      propertyPath: _initialCostIncome
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4473262442447166126, guid: 4393a211a340c0947a676adbf6ac4d9a, type: 3}
+      propertyPath: _tradeUpgradeLimit
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4473262442447166126, guid: 4393a211a340c0947a676adbf6ac4d9a, type: 3}
+      propertyPath: _incomeUpgradeLimit
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4473262442447166126, guid: 4393a211a340c0947a676adbf6ac4d9a, type: 3}
+      propertyPath: _initialCostTradeTime
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4473262442447166126, guid: 4393a211a340c0947a676adbf6ac4d9a, type: 3}
+      propertyPath: _tradeMultiplierIncrement
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4473262442447166126, guid: 4393a211a340c0947a676adbf6ac4d9a, type: 3}
+      propertyPath: _incomeMultiplierIncrement
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 7175653640059370557, guid: 4393a211a340c0947a676adbf6ac4d9a, type: 3}
       propertyPath: _shopPanel
       value: 
@@ -92903,11 +93023,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3232075853687004762, guid: e71890e490e5fae4fbe2df2530d3d341, type: 3}
       propertyPath: _tradeUpgradeLimit
-      value: 2
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3232075853687004762, guid: e71890e490e5fae4fbe2df2530d3d341, type: 3}
       propertyPath: _incomeUpgradeLimit
-      value: 2
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3232075853687004762, guid: e71890e490e5fae4fbe2df2530d3d341, type: 3}
       propertyPath: _initialCostTradeTime
@@ -93006,6 +93126,30 @@ PrefabInstance:
       propertyPath: _costTradeTimeText
       value: 
       objectReference: {fileID: 1652440476}
+    - target: {fileID: 3133677552365961449, guid: d319d76d037e23449a52fa572e7cc341, type: 3}
+      propertyPath: _initialCostIncome
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3133677552365961449, guid: d319d76d037e23449a52fa572e7cc341, type: 3}
+      propertyPath: _tradeUpgradeLimit
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3133677552365961449, guid: d319d76d037e23449a52fa572e7cc341, type: 3}
+      propertyPath: _incomeUpgradeLimit
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3133677552365961449, guid: d319d76d037e23449a52fa572e7cc341, type: 3}
+      propertyPath: _initialCostTradeTime
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3133677552365961449, guid: d319d76d037e23449a52fa572e7cc341, type: 3}
+      propertyPath: _tradeMultiplierIncrement
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3133677552365961449, guid: d319d76d037e23449a52fa572e7cc341, type: 3}
+      propertyPath: _incomeMultiplierIncrement
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 7816069663289588177, guid: d319d76d037e23449a52fa572e7cc341, type: 3}
       propertyPath: m_Name
       value: 'HyperMarketShop '
