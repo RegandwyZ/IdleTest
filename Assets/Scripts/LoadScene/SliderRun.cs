@@ -11,7 +11,7 @@ namespace LoadScene
         
         public IEnumerator RunSliderCoroutine()
         {
-            float time = 0f;
+            var time = 0f;
             while (time < 1f)
             {
                 time += Time.deltaTime * SPEED;

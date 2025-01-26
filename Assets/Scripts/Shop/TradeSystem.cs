@@ -9,14 +9,16 @@ namespace Shop
     {
         [SerializeField] private int _income;
         [SerializeField] private float _tradeTime;
+        
         [SerializeField] private TradeView _tradeView;
+        
         [SerializeField] private TextMeshProUGUI _incomeText;
         [SerializeField] private TextMeshProUGUI _tradeTimeText;
+        
         [SerializeField] private int _multiplier;
 
         private const float TRADE_TIME_DECREASE_TIME = 0.05f;
         
-        private int _basicMultiplier;
         private bool _isTradeRunning = false;
 
 
@@ -43,7 +45,6 @@ namespace Shop
         private void Awake()
         {
             UpdateUI();
-            _basicMultiplier = _multiplier;
         }
 
         public void Trade(Action onTradeComplete)
@@ -74,7 +75,6 @@ namespace Shop
         public void IncreaseIncome()
         {
             Income += _multiplier;
-            //_multiplier += _basicMultiplier;
         }
 
         private void UpdateUI()

@@ -15,12 +15,5 @@ namespace Shop
         {
             _shopPanel.SetActive(true);
         }
-
-        public void CloseShopPanel()
-        {
-            _shopPanel.SetActive(false);
-        }
-        
-        
     }
 }

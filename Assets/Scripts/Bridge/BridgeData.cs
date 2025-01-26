@@ -2,7 +2,7 @@
 
 namespace Bridge
 {
-    public class Bridge : MonoBehaviour
+    public class BridgeData : MonoBehaviour
     {
         public bool IsEnabled { get; private set; }
 

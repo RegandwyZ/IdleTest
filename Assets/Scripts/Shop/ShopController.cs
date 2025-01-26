@@ -9,142 +9,101 @@ namespace Shop
     public class ShopController : MonoBehaviour
     {
         [SerializeField] private ShopType _shopType;
+        
         [SerializeField] private Button _upgradeIncome;
         [SerializeField] private Button _upgradeTradeTime;
-        [SerializeField] private int _costUpIncome;
+        
         [SerializeField] private TextMeshProUGUI _costIncomeText;
-        [SerializeField] private int _costTradeTime;  
         [SerializeField] private TextMeshProUGUI _costTradeTimeText;
-        [SerializeField] private int _incomeMultiplier;
-        [SerializeField] private int _tradeMultiplier;
-        [SerializeField] private int _incomeCountBlock;
-        [SerializeField] private int _tradeCountBlock;
+        
+        [SerializeField] private int _initialCostIncome;
+        [SerializeField] private int _initialCostTradeTime;
+        [SerializeField] private int _incomeMultiplierIncrement;
+        [SerializeField] private int _tradeMultiplierIncrement;
+        [SerializeField] private int _incomeUpgradeLimit;
+        [SerializeField] private int _tradeUpgradeLimit;
 
         private ShopData _shopData;
 
+        private int _currentCostIncome;
+        private int _currentCostTradeTime;
+        private int _currentIncomeMultiplier;
+        private int _currentTradeMultiplier;
         private int _incomeCount = 1;
         private int _tradeCount = 1;
-        
-        
+
         private void Start()
         {
             _shopData = GetComponent<ShopData>();
 
-            _upgradeIncome.onClick.AddListener(UpgradeIncome);
-            _upgradeTradeTime.onClick.AddListener(UpgradeTradeTime);
-
-            LoadIncomeLevelFromJs();
-            LoadTradeTimeFromJs();
-
-            UpdateUI(); 
+            InitializeUpgrades();
+            LoadProgressFromJson();
+            UpdateUI();
         }
 
-        private void LoadTradeTimeFromJs()
+        private void InitializeUpgrades()
         {
-            var building = CurrentProgress.Instance.CurrentGameData.Buildings
-                .Find(b => b.BuildingId == _shopType);
+            _currentCostIncome = _initialCostIncome;
+            _currentCostTradeTime = _initialCostTradeTime;
+            _currentIncomeMultiplier = _incomeMultiplierIncrement;
+            _currentTradeMultiplier = _tradeMultiplierIncrement;
 
+            _upgradeIncome.onClick.AddListener(() => Upgrade(ShopUpgradeType.IncreaseMoney, ref _incomeCount, ref _currentCostIncome, ref _currentIncomeMultiplier, _incomeUpgradeLimit, _shopData.UpgradeIncome));
+            _upgradeTradeTime.onClick.AddListener(() => Upgrade(ShopUpgradeType.DecreaseTradeTime, ref _tradeCount, ref _currentCostTradeTime, ref _currentTradeMultiplier, _tradeUpgradeLimit, _shopData.UpgradeTradeTime));
+        }
+
+        private void LoadProgressFromJson()
+        {
+            var building = CurrentProgress.Instance.CurrentGameData.Buildings.Find(b => b.BuildingId == _shopType);
             if (building != null)
             {
-                var level = building.TradeTimeLevel;
-                for (int i = 1; i < level; i++)
-                {
-                    LoadTradeTimeFromJson();
-                    UpdateUI();
-                }
+                LoadUpgradesFromJson(building.IncomeLevel, ref _incomeCount, ref _currentCostIncome, ref _currentIncomeMultiplier, _shopData.UpgradeIncome);
+                LoadUpgradesFromJson(building.TradeTimeLevel, ref _tradeCount, ref _currentCostTradeTime, ref _currentTradeMultiplier, _shopData.UpgradeTradeTime);
             }
         }
 
-        private void LoadIncomeLevelFromJs()
+        private void LoadUpgradesFromJson(int level, ref int count, ref int currentCost, ref int multiplier, System.Action upgradeAction)
         {
-            var building = CurrentProgress.Instance.CurrentGameData.Buildings
-                .Find(b => b.BuildingId == _shopType);
-
-            if (building != null)
+            for (int i = 1; i < level; i++)
             {
-                var level = building.IncomeLevel;
-                for (int i = 1; i < level; i++)
-                {
-                    LoadIncomeFromJSon();
-                    UpdateUI();
-                }
+                ApplyUpgrade(ref count, ref currentCost, ref multiplier, upgradeAction);
             }
         }
 
-        private void UpgradeIncome()
+        private void Upgrade(ShopUpgradeType upgradeType, ref int count, ref int currentCost, ref int multiplier, int upgradeLimit, System.Action upgradeAction)
         {
-            if (_incomeCount >= _incomeCountBlock)
+            if (count >= upgradeLimit || !ResourcesSystem.Instance.SpendMoney(currentCost)) return;
+
+            ApplyUpgrade(ref count, ref currentCost, ref multiplier, upgradeAction);
+            CurrentProgress.Instance.UpgradeBuilding(_shopType, upgradeType);
+
+            if (count >= upgradeLimit)
             {
+                DisableButton(upgradeType);
+            }
+        }
+
+        private void ApplyUpgrade(ref int count, ref int currentCost, ref int multiplier, System.Action upgradeAction)
+        {
+            upgradeAction.Invoke();
+            currentCost += multiplier;
+            multiplier += 2;
+            count++;
+            UpdateUI();
+        }
+
+        private void DisableButton(ShopUpgradeType upgradeType)
+        {
+            if (upgradeType == ShopUpgradeType.IncreaseMoney)
                 _upgradeIncome.interactable = false;
-                return;
-            }
-
-            if (ResourcesSystem.Instance.SpendMoney(_costUpIncome))
-            {
-                _shopData.UpgradeIncome();
-
-                _costUpIncome += _incomeMultiplier;
-                _incomeMultiplier += 2;
-
-                UpdateUI();
-                _incomeCount++;
-                
-                CurrentProgress.Instance.UpgradeBuilding(_shopType, ShopUpgradeType.IncreaseMoney);
-            }
-        }
-
-        private void LoadIncomeFromJSon()
-        {
-            _shopData.UpgradeIncome();
-
-            _costUpIncome += _incomeMultiplier;
-            _incomeMultiplier += 2;
-            
-            _incomeCount++;
-        }
-
-        private void LoadTradeTimeFromJson()
-        {
-            _shopData.UpgradeTradeTime();
-
-            _costTradeTime += _tradeMultiplier;
-            _tradeMultiplier += 2;
-            
-            _tradeCount++;
-        }
-
-        private void UpgradeTradeTime()
-        {
-            
-            if (_tradeCount >= _tradeCountBlock)
-            {
-                
-                return;
-            }
-
-            if (ResourcesSystem.Instance.SpendMoney(_costTradeTime))
-            {
-                _shopData.UpgradeTradeTime();
-
-                _costTradeTime += _tradeMultiplier;
-                _tradeMultiplier += 2;
-
-                UpdateUI();
-                _tradeCount++;
-                
-                CurrentProgress.Instance.UpgradeBuilding(_shopType, ShopUpgradeType.DecreaseTradeTime);
-
-                if (_tradeCount >= _tradeCountBlock)
-                {
-                    _upgradeTradeTime.interactable = false;
-                }
-            }
+            else if (upgradeType == ShopUpgradeType.DecreaseTradeTime)
+                _upgradeTradeTime.interactable = false;
         }
 
         private void UpdateUI()
         {
-            _costIncomeText.text = $"{_costUpIncome}";
-            _costTradeTimeText.text = $"{_costTradeTime}";
+            _costIncomeText.text = $"{_currentCostIncome}";
+            _costTradeTimeText.text = $"{_currentCostTradeTime}";
         }
     }
 }

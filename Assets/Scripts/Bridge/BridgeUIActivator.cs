@@ -1,15 +1,16 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Bridge
 {
     public class BridgeUIActivator : MonoBehaviour
     {
         [SerializeField] private GameObject _uiLock;
-        [SerializeField] private Bridge _bridge;
+        [FormerlySerializedAs("_bridge")] [SerializeField] private BridgeData _bridgeData;
 
         private void OnEnable()
         {
-            if (_bridge.IsEnabled)
+            if (_bridgeData.IsEnabled)
             {
                 _uiLock.gameObject.SetActive(false);   
             }
@@ -17,7 +18,7 @@ namespace Bridge
 
         private void OnDisable()
         {
-            if (!_bridge.IsEnabled)
+            if (!_bridgeData.IsEnabled)
             {
                 _uiLock.gameObject.SetActive(true);
             }

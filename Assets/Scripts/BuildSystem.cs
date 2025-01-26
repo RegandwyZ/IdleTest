@@ -6,11 +6,10 @@ using TMPro;
 using UI;
 using UnityEngine;
 using UnityEngine.UI;
+using Bridge;
 
 public class BuildSystem : MonoBehaviour
 {
-    public event Action<ShopData> OnShopPurchased;
-    
     [Serializable]
     private struct ShopConfig
     {
@@ -22,8 +21,12 @@ public class BuildSystem : MonoBehaviour
         public ChangeButtonToImage ChangeButtonToImage;
     }
 
+    public event Action<ShopData> OnShopPurchased;
+    
     [SerializeField] private List<ShopConfig> _shopConfigs;
-    [SerializeField] private Bridge.Bridge _northBridge;
+    [SerializeField] private BridgeData _northBridgeData;
+    
+    
     public void InitializeShopConfigs()
     {
         foreach (var config in _shopConfigs)
@@ -40,11 +43,11 @@ public class BuildSystem : MonoBehaviour
         bool isEnabled = CurrentProgress.Instance.CurrentGameData.NorthBridge;
         if (isEnabled)
         {
-            _northBridge.gameObject.SetActive(true);
+            _northBridgeData.gameObject.SetActive(true);
         }
         else
         {
-            _northBridge.gameObject.SetActive(false);
+            _northBridgeData.gameObject.SetActive(false);
         }
     }
     private void InitializeShop(ShopConfig config)

@@ -1,6 +1,6 @@
 ﻿namespace Shop
 {
-    public enum ShopType
+    public enum ShopType 
     {
         Candy,
         Coffee,

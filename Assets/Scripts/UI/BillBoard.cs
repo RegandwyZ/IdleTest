@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace UI
 {
@@ -16,10 +16,10 @@ namespace UI
             
             if (_camera != null)
             {
-                 transform.LookAt(
+                transform.LookAt(
                     transform.position + _camera.transform.rotation * Vector3.forward, 
                     _camera.transform.rotation * Vector3.up
-                 );
+                );
             }
         }
     }

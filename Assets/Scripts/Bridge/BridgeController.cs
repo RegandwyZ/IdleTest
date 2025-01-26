@@ -1,13 +1,14 @@
 using PlayerCurrentProgress;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Bridge
 {
     public class BridgeController : MonoBehaviour
     {
-        [SerializeField] private global::Bridge.Bridge _bridge;
+        [FormerlySerializedAs("_bridge")] [SerializeField] private global::Bridge.BridgeData _bridgeData;
         [SerializeField] private int _bridgeCost;
         [SerializeField] private TextMeshProUGUI _bridgeCostText;
         [SerializeField] private Button _bridgeButton;
@@ -18,7 +19,7 @@ namespace Bridge
         {
             if (_currentProgress.CurrentGameData.NorthBridge)
             {
-                _bridge.gameObject.SetActive(true);
+                _bridgeData.gameObject.SetActive(true);
                 _bridgeCanvas.gameObject.SetActive(false);
             }
             else
@@ -34,7 +35,7 @@ namespace Bridge
             if (ResourcesSystem.Instance.SpendMoney(_bridgeCost))
             {
                 _currentProgress.AddNorthBridge();
-                _bridge.gameObject.SetActive(true);
+                _bridgeData.gameObject.SetActive(true);
                 _bridgeCanvas.gameObject.SetActive(false);
             }
         
