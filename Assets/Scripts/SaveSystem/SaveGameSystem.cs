@@ -25,7 +25,7 @@ namespace SaveSystem
             {
                 CurrentGameData = new GameData
                 {
-                    Money = 2000000,
+                    Money = 2000,
                     Buildings = new List<BuildingData>()
                 };
                 
@@ -82,10 +82,10 @@ namespace SaveSystem
                 SaveCurrentGame();
             }
         }
-        
-        public void SaveCurrentGame()
+
+        private void SaveCurrentGame()
         {
-           // SaveSystem.SaveGame(CurrentProgress.Instance.CurrentGameData);
+            SaveSystem.SaveGame(CurrentProgress.Instance.CurrentGameData);
         }
 
         
@@ -96,10 +96,10 @@ namespace SaveSystem
 
         private void OnApplicationQuit()
         {
-            //SaveCurrentGame();
+            SaveCurrentGame();
         }
-        
-        public void ClearAllData()
+
+        private void ClearAllData()
         {
            
             if (CurrentProgress.Instance != null)

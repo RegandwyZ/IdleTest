@@ -1,4 +1,6 @@
-﻿namespace Citizen.States
+﻿using UI;
+
+namespace Citizen.States
 {
     public class TradingState : ICitizenState
     {
@@ -31,6 +33,7 @@
         {
             _context.CurrentShop.ReleaseQueuePoint(_context.QueuePoint);
             _context.QueuePoint = null;
+            _context.Controller.SmileyController.ShowSmile(SmileType.Happy);
             
             SetNextShop();
             

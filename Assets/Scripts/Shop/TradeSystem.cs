@@ -60,10 +60,13 @@ namespace Shop
         {
             _tradeView.SetMoneyForTrade(_income);
             _tradeView.ShowProgress(_tradeTime);
+            
             yield return new WaitForSeconds(_tradeTime);
+            
             ResourcesSystem.Instance.AddMoney(_income);
+            
             _isTradeRunning = false;
-
+            
             onTradeComplete?.Invoke();
         }
 

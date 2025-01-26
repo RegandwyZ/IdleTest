@@ -72,12 +72,12 @@ namespace Shop
 
         private void Upgrade(ShopUpgradeType upgradeType, ref int count, ref int currentCost, ref int multiplier, int upgradeLimit, System.Action upgradeAction)
         {
-            if (count >= upgradeLimit || !ResourcesSystem.Instance.SpendMoney(currentCost)) return;
+            if (count > upgradeLimit || !ResourcesSystem.Instance.SpendMoney(currentCost)) return;
 
             ApplyUpgrade(ref count, ref currentCost, ref multiplier, upgradeAction);
             CurrentProgress.Instance.UpgradeBuilding(_shopType, upgradeType);
 
-            if (count >= upgradeLimit)
+            if (count > upgradeLimit)
             {
                 DisableButton(upgradeType);
             }
@@ -102,8 +102,8 @@ namespace Shop
 
         private void UpdateUI()
         {
-            _costIncomeText.text = $"{_currentCostIncome}";
-            _costTradeTimeText.text = $"{_currentCostTradeTime}";
+            _costIncomeText.text = $"${_currentCostIncome}";
+            _costTradeTimeText.text = $"${_currentCostTradeTime}";
         }
     }
 }

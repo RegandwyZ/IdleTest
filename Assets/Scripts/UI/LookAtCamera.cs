@@ -2,7 +2,7 @@
 
 namespace UI
 {
-    public class BillBoard : MonoBehaviour
+    public class LookAtCamera : MonoBehaviour
     {
         private Camera _camera;
 
@@ -10,10 +10,9 @@ namespace UI
         {
             _camera = Camera.main;
         }
-
+        
         private void LateUpdate()
         {
-            
             if (_camera != null)
             {
                 transform.LookAt(

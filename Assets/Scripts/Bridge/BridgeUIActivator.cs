@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
-using UnityEngine.Serialization;
+
 
 namespace Bridge
 {
     public class BridgeUIActivator : MonoBehaviour
     {
         [SerializeField] private GameObject _uiLock;
-        [FormerlySerializedAs("_bridge")] [SerializeField] private BridgeData _bridgeData;
+        [SerializeField] private BridgeData _bridgeData;
 
         private void OnEnable()
         {

@@ -48,7 +48,6 @@ namespace Citizen
             context.Shops = shopData;
             
             CalculateRandomizedCenterPoint(centerPoint, context);   
-            Debug.Log(context.CenterPoint);
             StateMachine.SetState(CitizenState.MoveToMarketPlace);
         }
 

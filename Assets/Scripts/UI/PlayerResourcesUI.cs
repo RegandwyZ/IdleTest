@@ -20,7 +20,7 @@ namespace UI
 
       private void UpdateMoneyText(int money)
       {
-         _textMoney.text = $"{money}";
+         _textMoney.text = $"${money}";
       }
    
   

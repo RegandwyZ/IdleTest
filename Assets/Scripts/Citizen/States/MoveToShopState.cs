@@ -1,4 +1,6 @@
-﻿namespace Citizen.States
+﻿using UI;
+
+namespace Citizen.States
 {
     public class MoveToShopState : ICitizenState
     {
@@ -34,7 +36,7 @@
 
                     if (queue == null)
                     {
-                        _context.Controller.SmileyController.ShowSmiley();
+                        _context.Controller.SmileyController.ShowSmile(SmileType.Angry);
                         SetNextShop();
                         _stateMachine.SetState(CitizenState.MoveToCenterPoint);
                     }

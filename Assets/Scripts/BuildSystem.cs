@@ -52,7 +52,7 @@ public class BuildSystem : MonoBehaviour
     }
     private void InitializeShop(ShopConfig config)
     {
-        config.PriceText.text = config.Price.ToString();
+        config.PriceText.text = $"${config.Price.ToString()}";
         config.Button.onClick.AddListener(() => BuyShop(config));
     }
 
