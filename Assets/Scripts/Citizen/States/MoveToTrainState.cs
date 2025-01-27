@@ -2,7 +2,7 @@
 
 namespace Citizen.States
 {
-     public class MoveToTrainState : ICitizenState
+    public class MoveToTrainState : ICitizenState
     {
         private readonly CitizenContext _context;
         private readonly CitizenStateMachine _stateMachine;
@@ -17,7 +17,7 @@ namespace Citizen.States
         {
             if (_context.PointsToTrain == null || _context.PointsToTrain.Length == 0)
                 return;
-            
+
             var baseTrainPoint = _context.PointsToTrain[^1].position;
 
             var randomX = Random.Range(-2f, -10f);
@@ -32,14 +32,14 @@ namespace Citizen.States
                 _stateMachine.SetState(CitizenState.MoveToTrainPlacePoint);
                 return;
             }
-            
+
             var target = _context.PointsToTrain[_context.CurrentPointToTrainIndex].position;
             bool reached = _context.Controller.Movement.MoveTo(target);
 
             if (reached)
             {
                 _context.CurrentPointToTrainIndex++;
-                
+
                 if (_context.CurrentPointToTrainIndex >= _context.PointsToTrain.Length)
                 {
                     _stateMachine.SetState(CitizenState.MoveToTrainPlacePoint);
@@ -49,7 +49,6 @@ namespace Citizen.States
 
         public void OnExit()
         {
-            
         }
     }
 }

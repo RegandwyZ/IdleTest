@@ -7,7 +7,7 @@ namespace UI
     {
         [SerializeField] private SpriteRenderer _happySmile;
         [SerializeField] private SpriteRenderer _angrySmile;
-        
+
         [SerializeField] private float _showTime = 2f;
 
         private Coroutine _hideCoroutine;
@@ -17,16 +17,16 @@ namespace UI
             _happySmile.enabled = false;
             _angrySmile.enabled = false;
         }
-        
+
         public void ShowSmile(SmileType smileType)
         {
             var spriteRenderer = smileType switch
             {
                 SmileType.Happy => _happySmile,
                 SmileType.Angry => _angrySmile,
-                _ =>_happySmile, 
+                _ => _happySmile,
             };
-            
+
             if (_hideCoroutine != null)
                 StopCoroutine(_hideCoroutine);
 
@@ -40,7 +40,5 @@ namespace UI
             sprite.enabled = false;
             _hideCoroutine = null;
         }
-        
-        
     }
 }

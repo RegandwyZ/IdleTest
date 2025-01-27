@@ -9,7 +9,7 @@ namespace Shop
     {
         [SerializeField] private Transform[] _shopPoint;
         [SerializeField] private QueuePoint[] _queuePoints;
-        
+
         [SerializeField] private TradeSystem _tradeSystem;
 
         private void Awake()
@@ -26,12 +26,12 @@ namespace Shop
         {
             _tradeSystem.IncreaseIncome();
         }
-        
+
         public Transform[] GetShopPoints()
         {
             return _shopPoint;
         }
-        
+
         public QueuePoint GetQueuePoint(CitizenController occupant)
         {
             foreach (var point in _queuePoints)
@@ -42,10 +42,10 @@ namespace Shop
                     return point;
                 }
             }
-            
+
             return null;
         }
-        
+
         public void StartTrade(Action onTradeComplete)
         {
             _tradeSystem.Trade(onTradeComplete);
@@ -54,7 +54,7 @@ namespace Shop
         public void ReleaseQueuePoint(QueuePoint freedPoint)
         {
             freedPoint.ClearOccupant();
-            
+
             for (int i = 0; i < _queuePoints.Length - 1; i++)
             {
                 if (_queuePoints[i].CurrentState == QueueState.Empty &&
@@ -65,7 +65,7 @@ namespace Shop
                     _queuePoints[i].AssignOccupant(nextOccupant);
 
                     nextOccupant.SetQueuePoint(_queuePoints[i]);
-                    
+
                     _queuePoints[i + 1].ClearOccupant();
                 }
             }

@@ -6,7 +6,7 @@ namespace Shop
     {
         [SerializeField] private ShopData[] _startShopData;
         [SerializeField] private BuildSystem _buildSystem;
-        
+
         public void Initialize()
         {
             _buildSystem.OnShopPurchased += AddShopToArray;
@@ -24,14 +24,15 @@ namespace Shop
             {
                 updatedShops[i] = _startShopData[i];
             }
-            updatedShops[^1] = newShop; 
-            _startShopData = updatedShops; 
+
+            updatedShops[^1] = newShop;
+            _startShopData = updatedShops;
         }
-        
+
         private ShopData[] ShuffleShops(ShopData[] original)
         {
             ShopData[] shuffled = (ShopData[])original.Clone();
-        
+
             for (int i = shuffled.Length - 1; i > 0; i--)
             {
                 int randomIndex = Random.Range(0, i + 1);

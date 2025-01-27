@@ -20,12 +20,12 @@
         {
             var pointsToTown = _context.PointsToTown;
             var index = _context.CurrentPointToTownIndex;
-            
+
             bool reached = _context.Controller.Movement.MoveTo(pointsToTown[index].position);
             if (reached)
             {
                 _context.CurrentPointToTownIndex++;
-                
+
                 if (_context.CurrentPointToTownIndex >= pointsToTown.Length)
                 {
                     if (_context.CurrentShopIndex < _context.Shops.Length)
@@ -43,7 +43,6 @@
 
         public void OnExit()
         {
-            
         }
 
         private void SetNextShop()

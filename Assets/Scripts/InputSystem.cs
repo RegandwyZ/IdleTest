@@ -1,3 +1,4 @@
+using SoundSystem;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -11,8 +12,8 @@ public class InputSystem : MonoBehaviour
     private readonly Vector2 _zoomBounds = new(10f, 50f);
 
     private Vector3 _dragOrigin;
-    private bool _isDragging = false;
-    private bool _isInteractingWithCamera = false; 
+    private bool _isDragging;
+    private bool _isInteractingWithCamera;
 
     private void Update()
     {
@@ -67,7 +68,7 @@ public class InputSystem : MonoBehaviour
     {
         _dragOrigin = position;
         _isDragging = true;
-        _isInteractingWithCamera = false; // Сбрасываем флаг взаимодействия
+        _isInteractingWithCamera = false; 
     }
 
     private void ContinueDragging(Vector3 position)
@@ -75,18 +76,17 @@ public class InputSystem : MonoBehaviour
         Vector3 delta = position - _dragOrigin;
         _dragOrigin = position;
 
-        if (delta.sqrMagnitude > 1f) // Минимальный порог движения, чтобы считать это перемещением
+        if (delta.sqrMagnitude > 1f) 
         {
             MoveCamera(delta);
-            _isInteractingWithCamera = true; // Фиксируем, что была активность камеры
+            _isInteractingWithCamera = true; 
         }
     }
 
     private void StopDragging(Vector3 position)
     {
         _isDragging = false;
-
-        // Если камера не двигалась, пытаемся взаимодействовать с магазином
+        
         if (!_isInteractingWithCamera)
         {
             TryInteractWithShop(position);
@@ -116,7 +116,8 @@ public class InputSystem : MonoBehaviour
 
         if (touch1.phase == TouchPhase.Moved || touch2.phase == TouchPhase.Moved)
         {
-            float previousDistance = (touch1.position - touch1.deltaPosition - (touch2.position - touch2.deltaPosition)).magnitude;
+            float previousDistance = (touch1.position - touch1.deltaPosition - (touch2.position - touch2.deltaPosition))
+                .magnitude;
             float currentDistance = (touch1.position - touch2.position).magnitude;
             float zoomDelta = (currentDistance - previousDistance) * 0.01f;
 
@@ -158,9 +159,11 @@ public class InputSystem : MonoBehaviour
             if (shopView != null)
             {
                 shopView.OpenShopPanel();
+                AudioSystem.Instance.PlaySfx(SfxType.ClickBuilding);
                 return true;
             }
         }
+
         return false;
     }
 

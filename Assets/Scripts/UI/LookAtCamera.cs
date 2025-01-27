@@ -10,13 +10,13 @@ namespace UI
         {
             _camera = Camera.main;
         }
-        
+
         private void LateUpdate()
         {
             if (_camera != null)
             {
                 transform.LookAt(
-                    transform.position + _camera.transform.rotation * Vector3.forward, 
+                    transform.position + _camera.transform.rotation * Vector3.forward,
                     _camera.transform.rotation * Vector3.up
                 );
             }

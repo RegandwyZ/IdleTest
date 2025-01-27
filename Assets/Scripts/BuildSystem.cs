@@ -22,19 +22,19 @@ public class BuildSystem : MonoBehaviour
     }
 
     public event Action<ShopData> OnShopPurchased;
-    
+
     [SerializeField] private List<ShopConfig> _shopConfigs;
     [SerializeField] private BridgeData _northBridgeData;
-    
-    
+
+
     public void InitializeShopConfigs()
     {
         foreach (var config in _shopConfigs)
         {
             InitializeShop(config);
-            config.ShopData.gameObject.SetActive(false); 
+            config.ShopData.gameObject.SetActive(false);
         }
-        
+
         ActivateExistingShops();
     }
 
@@ -50,6 +50,7 @@ public class BuildSystem : MonoBehaviour
             _northBridgeData.gameObject.SetActive(false);
         }
     }
+
     private void InitializeShop(ShopConfig config)
     {
         config.PriceText.text = $"${config.Price.ToString()}";
@@ -70,7 +71,7 @@ public class BuildSystem : MonoBehaviour
             CurrentProgress.Instance.AddBuilding(config.Type);
         }
     }
-    
+
     private void ActivateExistingShops()
     {
         var existingBuildings = CurrentProgress.Instance.CurrentGameData.Buildings;
@@ -80,12 +81,12 @@ public class BuildSystem : MonoBehaviour
             if (existingBuildings.Exists(building => building.BuildingId == config.Type))
             {
                 config.ShopData.gameObject.SetActive(true);
-                
+
                 if (config.ChangeButtonToImage != null)
                 {
                     config.ChangeButtonToImage.Change();
                 }
-                
+
                 OnShopPurchased?.Invoke(config.ShopData);
                 CurrentProgress.Instance.AddBuilding(config.Type);
             }

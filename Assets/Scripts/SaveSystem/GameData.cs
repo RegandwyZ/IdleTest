@@ -5,11 +5,10 @@ using System.Collections.Generic;
 namespace SaveSystem
 {
     [Serializable]
-    public class GameData 
+    public class GameData
     {
         public int Money;
         public List<BuildingData> Buildings;
         public bool NorthBridge;
     }
-    
 }

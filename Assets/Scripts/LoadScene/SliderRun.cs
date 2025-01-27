@@ -8,7 +8,7 @@ namespace LoadScene
     {
         [SerializeField] private Slider _slider;
         private const float SPEED = 0.35f;
-        
+
         public IEnumerator RunSliderCoroutine()
         {
             var time = 0f;
@@ -19,7 +19,7 @@ namespace LoadScene
                 yield return null;
             }
 
-            _slider.value = 1f; 
+            _slider.value = 1f;
         }
     }
 }

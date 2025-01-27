@@ -14,6 +14,7 @@ namespace Bridge
         [SerializeField] private Canvas _bridgeCanvas;
         [SerializeField] private CurrentProgress _currentProgress;
         [SerializeField] private GameObject _maskNorthBridge;
+
         public void BridgeInitialize()
         {
             if (_currentProgress.CurrentGameData.NorthBridge)
@@ -28,7 +29,6 @@ namespace Bridge
                 _bridgeButton.onClick.AddListener(ConstructBridge);
                 _bridgeCostText.text = $"${_bridgeCost}";
             }
-       
         }
 
         private void ConstructBridge()
@@ -40,7 +40,6 @@ namespace Bridge
                 _bridgeCanvas.gameObject.SetActive(false);
                 _maskNorthBridge.SetActive(false);
             }
-        
         }
     }
 }

@@ -21,12 +21,10 @@ namespace Citizen.States
 
         public void OnUpdate()
         {
-            
         }
 
         public void OnExit()
         {
-            
         }
 
         private void OnTradeComplete()
@@ -34,9 +32,9 @@ namespace Citizen.States
             _context.CurrentShop.ReleaseQueuePoint(_context.QueuePoint);
             _context.QueuePoint = null;
             _context.Controller.SmileyController.ShowSmile(SmileType.Happy);
-            
+
             SetNextShop();
-            
+
             _stateMachine.SetState(CitizenState.MoveToCenterPoint);
         }
 

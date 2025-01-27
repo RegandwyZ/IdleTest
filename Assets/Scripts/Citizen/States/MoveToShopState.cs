@@ -28,7 +28,7 @@ namespace Citizen.States
             if (reached)
             {
                 _context.CurrentPointToShopIndex++;
-                
+
                 if (_context.CurrentPointToShopIndex >= shopPoints.Length)
                 {
                     var queue = _context.CurrentShop.GetQueuePoint(_context.Controller);
@@ -50,7 +50,6 @@ namespace Citizen.States
 
         public void OnExit()
         {
-            
         }
 
         private void SetNextShop()

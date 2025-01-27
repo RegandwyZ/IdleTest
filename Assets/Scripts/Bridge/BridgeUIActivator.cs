@@ -12,7 +12,7 @@ namespace Bridge
         {
             if (_bridgeData.IsEnabled)
             {
-                _uiLock.gameObject.SetActive(false);   
+                _uiLock.gameObject.SetActive(false);
             }
         }
 

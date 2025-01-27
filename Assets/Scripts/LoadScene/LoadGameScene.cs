@@ -7,7 +7,6 @@ namespace LoadScene
 {
     public class LoadGameScene : MonoBehaviour
     {
-         
         [SerializeField] private SliderRun _sliderRun;
         private const string GAME_SCENE = "Game";
 

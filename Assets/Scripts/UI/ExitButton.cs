@@ -1,3 +1,4 @@
+using SoundSystem;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,6 +17,7 @@ namespace UI
 
         private void ClosePanel()
         {
+            AudioSystem.Instance.PlaySfx(SfxType.ExitBuilding);
             _exitPanel.SetActive(false);
         }
     }

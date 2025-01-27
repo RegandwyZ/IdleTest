@@ -1,4 +1,5 @@
 ﻿using PlayerCurrentProgress;
+using SoundSystem;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,13 +10,13 @@ namespace Shop
     public class ShopController : MonoBehaviour
     {
         [SerializeField] private ShopType _shopType;
-        
+
         [SerializeField] private Button _upgradeIncome;
         [SerializeField] private Button _upgradeTradeTime;
-        
+
         [SerializeField] private TextMeshProUGUI _costIncomeText;
         [SerializeField] private TextMeshProUGUI _costTradeTimeText;
-        
+
         [SerializeField] private int _initialCostIncome;
         [SerializeField] private int _initialCostTradeTime;
         [SerializeField] private int _incomeMultiplierIncrement;
@@ -48,8 +49,12 @@ namespace Shop
             _currentIncomeMultiplier = _incomeMultiplierIncrement;
             _currentTradeMultiplier = _tradeMultiplierIncrement;
 
-            _upgradeIncome.onClick.AddListener(() => Upgrade(ShopUpgradeType.IncreaseMoney, ref _incomeCount, ref _currentCostIncome, ref _currentIncomeMultiplier, _incomeUpgradeLimit, _shopData.UpgradeIncome));
-            _upgradeTradeTime.onClick.AddListener(() => Upgrade(ShopUpgradeType.DecreaseTradeTime, ref _tradeCount, ref _currentCostTradeTime, ref _currentTradeMultiplier, _tradeUpgradeLimit, _shopData.UpgradeTradeTime));
+            _upgradeIncome.onClick.AddListener(() => Upgrade(ShopUpgradeType.IncreaseMoney, ref _incomeCount,
+                ref _currentCostIncome, ref _currentIncomeMultiplier, _incomeUpgradeLimit, _shopData.UpgradeIncome));
+            
+            _upgradeTradeTime.onClick.AddListener(() => Upgrade(ShopUpgradeType.DecreaseTradeTime, ref _tradeCount,
+                ref _currentCostTradeTime, ref _currentTradeMultiplier, _tradeUpgradeLimit,
+                _shopData.UpgradeTradeTime));
         }
 
         private void LoadProgressFromJson()
@@ -57,12 +62,15 @@ namespace Shop
             var building = CurrentProgress.Instance.CurrentGameData.Buildings.Find(b => b.BuildingId == _shopType);
             if (building != null)
             {
-                LoadUpgradesFromJson(building.IncomeLevel, ref _incomeCount, ref _currentCostIncome, ref _currentIncomeMultiplier, _shopData.UpgradeIncome);
-                LoadUpgradesFromJson(building.TradeTimeLevel, ref _tradeCount, ref _currentCostTradeTime, ref _currentTradeMultiplier, _shopData.UpgradeTradeTime);
+                LoadUpgradesFromJson(building.IncomeLevel, ref _incomeCount, ref _currentCostIncome,
+                    ref _currentIncomeMultiplier, _shopData.UpgradeIncome);
+                LoadUpgradesFromJson(building.TradeTimeLevel, ref _tradeCount, ref _currentCostTradeTime,
+                    ref _currentTradeMultiplier, _shopData.UpgradeTradeTime);
             }
         }
 
-        private void LoadUpgradesFromJson(int level, ref int count, ref int currentCost, ref int multiplier, System.Action upgradeAction)
+        private void LoadUpgradesFromJson(int level, ref int count, ref int currentCost, ref int multiplier,
+            System.Action upgradeAction)
         {
             for (int i = 1; i < level; i++)
             {
@@ -70,10 +78,13 @@ namespace Shop
             }
         }
 
-        private void Upgrade(ShopUpgradeType upgradeType, ref int count, ref int currentCost, ref int multiplier, int upgradeLimit, System.Action upgradeAction)
+        private void Upgrade(ShopUpgradeType upgradeType, ref int count, ref int currentCost, ref int multiplier,
+            int upgradeLimit, System.Action upgradeAction)
         {
             if (count > upgradeLimit || !ResourcesSystem.Instance.SpendMoney(currentCost)) return;
 
+            AudioSystem.Instance.PlaySfx(SfxType.ClickUpgrade);
+            
             ApplyUpgrade(ref count, ref currentCost, ref multiplier, upgradeAction);
             CurrentProgress.Instance.UpgradeBuilding(_shopType, upgradeType);
 

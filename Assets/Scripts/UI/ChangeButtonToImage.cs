@@ -7,7 +7,7 @@ namespace UI
     {
         [SerializeField] private Button _button;
         [SerializeField] private Image _image;
-    
+
         public void Change()
         {
             _image.gameObject.SetActive(true);

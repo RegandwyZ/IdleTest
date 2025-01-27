@@ -31,14 +31,14 @@ public class ResourcesSystem : MonoBehaviour
         private set
         {
             _money = value;
-            OnMoneyChanged?.Invoke(_money); 
+            OnMoneyChanged?.Invoke(_money);
         }
     }
 
     public void AddMoney(int amount)
     {
         Money += amount;
-        CurrentProgress.Instance.ChangeMoney(amount); 
+        CurrentProgress.Instance.ChangeMoney(amount);
     }
 
     public bool SpendMoney(int amount)
@@ -46,7 +46,7 @@ public class ResourcesSystem : MonoBehaviour
         if (_money >= amount)
         {
             Money -= amount;
-            CurrentProgress.Instance.ChangeMoney(-amount); 
+            CurrentProgress.Instance.ChangeMoney(-amount);
             return true;
         }
         else

@@ -1,10 +1,8 @@
-
 using PathSystem;
 using Queue;
 using Shop;
 using UI;
 using UnityEngine;
-
 
 
 namespace Citizen
@@ -27,7 +25,7 @@ namespace Citizen
         public float MoveSpeed => _moveSpeed;
         public float RotationSpeed => _rotationSpeed;
 
-        
+
         public void ConfigureCitizen()
         {
             Movement = GetComponent<CitizenMovement>();
@@ -46,8 +44,8 @@ namespace Citizen
         {
             var context = StateMachine.Context;
             context.Shops = shopData;
-            
-            CalculateRandomizedCenterPoint(centerPoint, context);   
+
+            CalculateRandomizedCenterPoint(centerPoint, context);
             StateMachine.SetState(CitizenState.MoveToMarketPlace);
         }
 
@@ -55,7 +53,7 @@ namespace Citizen
         {
             var randomX = Random.Range(-1.5f, 1.5f);
             var randomZ = Random.Range(-1.5f, 1.5f);
-            
+
             context.CenterPoint = centerPoint + new Vector3(randomX, 0, randomZ);
         }
 

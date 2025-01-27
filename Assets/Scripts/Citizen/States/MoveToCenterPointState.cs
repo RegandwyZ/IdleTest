@@ -13,8 +13,6 @@
 
         public void OnEnter()
         {
-            // Можно сбросить/установить нужную анимацию (если нужно)
-            // _context.Controller.Animator.SetMoveAnimation();
         }
 
         public void OnUpdate()
@@ -49,7 +47,6 @@
 
         public void OnExit()
         {
-            
         }
     }
 }
