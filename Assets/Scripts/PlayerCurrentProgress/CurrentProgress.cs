@@ -20,13 +20,10 @@ namespace PlayerCurrentProgress
             }
             Instance = this;
             
-            if (CurrentGameData == null)
+            CurrentGameData ??= new GameData
             {
-                CurrentGameData = new GameData
-                {
-                    Buildings = new List<BuildingData>()
-                };
-            }
+                Buildings = new List<BuildingData>()
+            };
         }
         
 

@@ -4,6 +4,9 @@
     {
         Candy,
         Coffee,
+        Kiosk,
+        Restaurant,
+        PostBank,
         Gardening,
         Fashion,
         Pawn,

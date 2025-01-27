@@ -13,10 +13,10 @@ namespace Train
 
         [SerializeField] private SpawnCitizenSystem _spawnCitizenSystem;
 
-        private const float SPEED = 15f;
+        private const float SPEED = 21f;
 
-        private const float STATION_STOP_DURATION = 2f;
-        private const float TRAIN_AWAY_DURATION = 2f;
+        private const float STATION_STOP_DURATION = 5f;
+        private const float TRAIN_AWAY_DURATION = 5f;
 
         private void Start()
         {

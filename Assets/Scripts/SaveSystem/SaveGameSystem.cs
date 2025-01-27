@@ -25,18 +25,18 @@ namespace SaveSystem
             {
                 CurrentGameData = new GameData
                 {
-                    Money = 2000,
+                    Money = 10000,
                     Buildings = new List<BuildingData>()
                 };
                 
                 AddCandyShopAtFirstTime();
-                AddFruitShopAtFirstTime();
+                AddCoffeeShopAtFirstTime();
             }
 
             ApplyLoadedData();
         }
 
-        private void AddFruitShopAtFirstTime()
+        private void AddCoffeeShopAtFirstTime()
         {
             CurrentGameData.Buildings.Add(new BuildingData
             {
@@ -96,7 +96,7 @@ namespace SaveSystem
 
         private void OnApplicationQuit()
         {
-            SaveCurrentGame();
+            //SaveCurrentGame();
         }
 
         private void ClearAllData()

@@ -45,7 +45,7 @@ namespace SpawnSystem
                 yield return new WaitForSeconds(0.1f);
             }
 
-            if (_spawnCycleCounter % 3 == 0) 
+            if (_spawnCycleCounter % 5 == 0) 
             {
                 _spawnCounter.IncreaseSpawnCount();
             }

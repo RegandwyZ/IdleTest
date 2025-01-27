@@ -23,6 +23,7 @@ public class ResourcesSystem : MonoBehaviour
         }
 
         _money = CurrentProgress.Instance.CurrentGameData.Money;
+        
     }
 
     public int Money
