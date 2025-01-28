@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace SoundSystem
+namespace Systems.SoundSystem
 {
     public enum ToggleSoundType
     {
@@ -13,9 +13,9 @@ namespace SoundSystem
     public class ToggleSoundButton : MonoBehaviour
     {
         [SerializeField] private ToggleSoundType _toggleType;
-        
-        [SerializeField] private Sprite _buttonOn;   
-        [SerializeField] private Sprite _buttonOff;  
+
+        [SerializeField] private Sprite _buttonOn;
+        [SerializeField] private Sprite _buttonOff;
 
         private Button _button;
 
@@ -37,19 +37,19 @@ namespace SoundSystem
                 case ToggleSoundType.Music:
                     AudioSystem.Instance.ToggleMusic();
                     break;
-                
+
                 case ToggleSoundType.Sfx:
                     AudioSystem.Instance.ToggleSfx();
                     break;
             }
-            
+
             UpdateButtonSprite();
         }
-        
+
         private void UpdateButtonSprite()
         {
             bool isMuted = false;
-            
+
             switch (_toggleType)
             {
                 case ToggleSoundType.Music:
@@ -60,7 +60,7 @@ namespace SoundSystem
                     isMuted = AudioSystem.Instance.IsSfxMuted;
                     break;
             }
-            
+
             _button.image.sprite = isMuted ? _buttonOff : _buttonOn;
         }
     }

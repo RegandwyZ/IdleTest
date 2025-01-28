@@ -1,5 +1,6 @@
 ﻿using PlayerCurrentProgress;
-using SoundSystem;
+using Systems.ResourcesSystem;
+using Systems.SoundSystem;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,6 +15,11 @@ namespace Shop
         [SerializeField] private Button _upgradeIncome;
         [SerializeField] private Button _upgradeTradeTime;
 
+        [SerializeField] private GameObject _incomeButtonObject; 
+        [SerializeField] private GameObject _tradeButtonObject; 
+        [SerializeField] private Image _incomeMaxImage; 
+        [SerializeField] private Image _tradeMaxImage;
+        
         [SerializeField] private TextMeshProUGUI _costIncomeText;
         [SerializeField] private TextMeshProUGUI _costTradeTimeText;
 
@@ -40,6 +46,7 @@ namespace Shop
             InitializeUpgrades();
             LoadProgressFromJson();
             UpdateUI();
+            CheckUpgradeLimits(); 
         }
 
         private void InitializeUpgrades()
@@ -88,10 +95,7 @@ namespace Shop
             ApplyUpgrade(ref count, ref currentCost, ref multiplier, upgradeAction);
             CurrentProgress.Instance.UpgradeBuilding(_shopType, upgradeType);
 
-            if (count > upgradeLimit)
-            {
-                DisableButton(upgradeType);
-            }
+            CheckUpgradeLimits();
         }
 
         private void ApplyUpgrade(ref int count, ref int currentCost, ref int multiplier, System.Action upgradeAction)
@@ -103,12 +107,27 @@ namespace Shop
             UpdateUI();
         }
 
-        private void DisableButton(ShopUpgradeType upgradeType)
+        private void CheckUpgradeLimits()
+        {
+            if (_incomeCount > _incomeUpgradeLimit)
+                ShowMaxUpgrade(ShopUpgradeType.IncreaseMoney);
+            
+            if (_tradeCount > _tradeUpgradeLimit)
+                ShowMaxUpgrade(ShopUpgradeType.DecreaseTradeTime);
+        }
+
+        private void ShowMaxUpgrade(ShopUpgradeType upgradeType)
         {
             if (upgradeType == ShopUpgradeType.IncreaseMoney)
-                _upgradeIncome.interactable = false;
+            {
+                _incomeButtonObject.SetActive(false); 
+                _incomeMaxImage.gameObject.SetActive(true); 
+            }
             else if (upgradeType == ShopUpgradeType.DecreaseTradeTime)
-                _upgradeTradeTime.interactable = false;
+            {
+                _tradeButtonObject.SetActive(false); 
+                _tradeMaxImage.gameObject.SetActive(true); 
+            }
         }
 
         private void UpdateUI()

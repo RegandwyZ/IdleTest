@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace PathSystem
+namespace Systems.PathSystem
 {
     public class CitizenPath : MonoBehaviour
     {

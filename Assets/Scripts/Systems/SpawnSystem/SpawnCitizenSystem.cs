@@ -1,11 +1,11 @@
 using System.Collections;
 using Citizen;
-using PathSystem;
 using Shop;
+using Systems.PathSystem;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace SpawnSystem
+namespace Systems.SpawnSystem
 {
     public class SpawnCitizenSystem : MonoBehaviour
     {

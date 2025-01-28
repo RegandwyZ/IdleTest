@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using UnityEngine;
 
-namespace SaveSystem
+namespace Systems.SaveSystem
 {
     public static class SaveSystem
     {
@@ -15,8 +15,7 @@ namespace SaveSystem
             string path = Path.Combine(Application.persistentDataPath, saveFileName);
             
             File.WriteAllText(path, json);
-
-            Debug.Log($"[SaveSystem] Игра сохранена: {path}");
+            
         }
         
         public static GameData LoadGame()
@@ -25,13 +24,11 @@ namespace SaveSystem
             
             if (!File.Exists(path))
             {
-                Debug.LogWarning($"[SaveSystem] Файл сохранения не найден: {path}");
                 return null;
             }
             
             string json = File.ReadAllText(path);
             GameData data = JsonUtility.FromJson<GameData>(json);
-            Debug.Log($"[SaveSystem] Игра загружена: {path}");
         
             return data;
         }

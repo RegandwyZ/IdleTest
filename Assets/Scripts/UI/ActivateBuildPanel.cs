@@ -1,4 +1,4 @@
-using SoundSystem;
+using Systems.SoundSystem;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,6 +21,5 @@ namespace UI
             AudioSystem.Instance.PlaySfx(SfxType.ClickBuilding);
             _buildPanel.SetActive(true);
         }
-    
     }
 }

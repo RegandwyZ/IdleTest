@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using SaveSystem;
 using Shop;
+using Systems.SaveSystem;
 using UnityEngine;
 
 namespace PlayerCurrentProgress
@@ -10,7 +10,7 @@ namespace PlayerCurrentProgress
         public static CurrentProgress Instance { get; private set; }
         public GameData CurrentGameData;
 
-        
+
         public void InitializeCurrentGameData()
         {
             if (Instance != null && Instance != this)
@@ -18,14 +18,15 @@ namespace PlayerCurrentProgress
                 Destroy(gameObject);
                 return;
             }
+
             Instance = this;
-            
+
             CurrentGameData ??= new GameData
             {
                 Buildings = new List<BuildingData>()
             };
         }
-        
+
 
         public void ChangeMoney(int amount)
         {
@@ -33,7 +34,7 @@ namespace PlayerCurrentProgress
             CurrentGameData.Money += amount;
         }
 
-       
+
         public void AddBuilding(ShopType buildingId)
         {
             if (CurrentGameData?.Buildings == null) return;
@@ -46,7 +47,6 @@ namespace PlayerCurrentProgress
                 IncomeLevel = 1,
                 TradeTimeLevel = 1
             });
-           
         }
 
         public void AddNorthBridge()
@@ -55,7 +55,7 @@ namespace PlayerCurrentProgress
             CurrentGameData.NorthBridge = true;
         }
 
-        
+
         public void UpgradeBuilding(ShopType buildingId, ShopUpgradeType upgradeType)
         {
             if (CurrentGameData == null || CurrentGameData.Buildings == null) return;
@@ -68,11 +68,10 @@ namespace PlayerCurrentProgress
                     case ShopUpgradeType.IncreaseMoney:
                         building.IncomeLevel++;
                         break;
-                    
+
                     case ShopUpgradeType.DecreaseTradeTime:
                         building.TradeTimeLevel++;
                         break;
-                   
                 }
             }
         }

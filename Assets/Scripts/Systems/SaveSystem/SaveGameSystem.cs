@@ -5,18 +5,17 @@ using PlayerCurrentProgress;
 using Shop;
 using UnityEngine;
 
-
-namespace SaveSystem
+namespace Systems.SaveSystem
 {
     public class SaveGameSystem : MonoBehaviour
     {
         [SerializeField] private float _autoSaveInterval = 30f;
-        
+        [SerializeField] private int _moneyOnFirstStart;
         public GameData CurrentGameData;
 
         public void InitializeSaveGameSystem()
         {
-            GameData loadedData = SaveSystem.LoadGame();
+            GameData loadedData = global::Systems.SaveSystem.SaveSystem.LoadGame();
             if (loadedData != null)
             {
                 CurrentGameData = loadedData;
@@ -25,10 +24,10 @@ namespace SaveSystem
             {
                 CurrentGameData = new GameData
                 {
-                    Money = 10000,
+                    Money = _moneyOnFirstStart,
                     Buildings = new List<BuildingData>()
                 };
-                
+
                 AddCandyShopAtFirstTime();
                 AddCoffeeShopAtFirstTime();
             }
@@ -61,18 +60,6 @@ namespace SaveSystem
             StartCoroutine(AutoSaveCoroutine());
         }
 
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                ClearAllData();
-            }
-
-            if (Input.GetKeyDown(KeyCode.A))
-            {
-                SaveSystem.SaveGame(CurrentProgress.Instance.CurrentGameData);
-            }
-        }
 
         private IEnumerator AutoSaveCoroutine()
         {
@@ -85,10 +72,9 @@ namespace SaveSystem
 
         private void SaveCurrentGame()
         {
-            SaveSystem.SaveGame(CurrentProgress.Instance.CurrentGameData);
+            global::Systems.SaveSystem.SaveSystem.SaveGame(CurrentProgress.Instance.CurrentGameData);
         }
 
-        
         private void ApplyLoadedData()
         {
             CurrentProgress.Instance.CurrentGameData = CurrentGameData;
@@ -96,12 +82,11 @@ namespace SaveSystem
 
         private void OnApplicationQuit()
         {
-            //SaveCurrentGame();
+            SaveCurrentGame();
         }
 
         private void ClearAllData()
         {
-           
             if (CurrentProgress.Instance != null)
             {
                 CurrentProgress.Instance.CurrentGameData = new GameData
@@ -110,7 +95,7 @@ namespace SaveSystem
                     Buildings = new List<BuildingData>()
                 };
             }
-            
+
             string saveFilePath = Path.Combine(Application.persistentDataPath, "savedata.json");
             if (File.Exists(saveFilePath))
             {

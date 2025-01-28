@@ -6,10 +6,10 @@ namespace UI
 {
     public class FadeOutImage : MonoBehaviour
     {
-        [SerializeField] private Image[] _imagesToFade; 
-        [SerializeField] private GameObject _panel; 
+        [SerializeField] private Image[] _imagesToFade;
+        [SerializeField] private GameObject _panel;
 
-        private const float DURATION = 2f; 
+        private const float DURATION = 2f;
 
         private void Start()
         {
@@ -29,7 +29,7 @@ namespace UI
             {
                 elapsedTime += Time.deltaTime;
                 float alpha = Mathf.Lerp(1f, 0f, elapsedTime / DURATION);
-                
+
                 for (int i = 0; i < _imagesToFade.Length; i++)
                 {
                     _imagesToFade[i].color = new Color(
@@ -42,7 +42,7 @@ namespace UI
 
                 yield return null;
             }
-            
+
             for (int i = 0; i < _imagesToFade.Length; i++)
             {
                 _imagesToFade[i].color = new Color(
@@ -52,7 +52,7 @@ namespace UI
                     0f
                 );
             }
-            
+
             if (_panel != null)
             {
                 _panel.SetActive(false);

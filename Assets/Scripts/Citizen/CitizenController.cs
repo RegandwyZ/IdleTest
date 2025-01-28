@@ -1,6 +1,6 @@
-using PathSystem;
 using Queue;
 using Shop;
+using Systems.PathSystem;
 using UI;
 using UnityEngine;
 

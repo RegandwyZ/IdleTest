@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Systems.ResourcesSystem;
 using TMPro;
 using UnityEngine;
 
@@ -19,7 +20,7 @@ namespace Shop
 
         private const float TRADE_TIME_DECREASE_TIME = 0.05f;
         
-        private bool _isTradeRunning = false;
+        private bool _isTradeRunning;
 
 
         private int Income

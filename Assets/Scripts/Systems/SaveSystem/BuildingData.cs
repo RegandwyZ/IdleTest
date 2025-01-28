@@ -1,7 +1,7 @@
 using System;
 using Shop;
 
-namespace SaveSystem
+namespace Systems.SaveSystem
 {
     [Serializable]
     public class BuildingData 
